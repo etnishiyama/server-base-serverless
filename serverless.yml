@@ -52,9 +52,12 @@ custom:
 
   customDomain:
     domainName: 'api-sample.moboweb.com.br'
+    certificateName: 'api-sample.moboweb.com.br'
     basePath: ${self:provider.stage}
     stage: ${self:provider.stage}
     createRoute53Record: true
+    endpointType: 'regional'
+    securityPolicy: tls_1_2
 
 plugins:
   - serverless-dynamodb-local
