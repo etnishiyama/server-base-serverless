@@ -1,15 +1,15 @@
 'use strict';
 
-const uuid = require('uuid');
-const dynamo = require('../lib/dynamo');
-const response = require('../lib/response');
+import * as uuid from 'uuid';
+import * as dynamo from '../lib/dynamo';
+import {response} from '../lib/response';
 
-module.exports.postUser = async (event, context, callback) => {
+export const postUser = async (event, _context) => {
   const body = JSON.parse(event.body);
 
   if (body === null) {
     console.error('Body is null');
-    callback(new Error('Null body'));
+    return response({}, 400, 'Null body', 1);
   }
 
   const fullname = body.fullname;
@@ -17,17 +17,17 @@ module.exports.postUser = async (event, context, callback) => {
 
   if (typeof fullname !== 'string' || typeof email !== 'string') {
     console.error('Validation failed');
-    callback(new Error('Validation error'));
+    return response({}, 400, 'Validation failed', 2);
   }
 
   const user = buildUser(fullname, email);
 
   return dynamo.save(user)
     .then(success => {
-      response.json(callback, success, 201);
+      return response(success, 201);
     })
     .catch(err => {
-      response.json(callback, err, 500);
+      return response(err, 500);
     });
 };
 

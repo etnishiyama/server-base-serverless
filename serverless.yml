@@ -39,7 +39,7 @@ custom:
 
   webpack:
     webpackConfig: 'webpack.config.js'
-    includeModules: false
+    includeModules: true
     packager: 'npm'
     excludeFiles: src/**/*.test.js
 
@@ -61,9 +61,9 @@ custom:
 
 plugins:
   - serverless-dynamodb-local
-  - serverless-offline
   - serverless-webpack
   - serverless-domain-manager
+  - serverless-offline
 
 package:
   individually: true

@@ -5,14 +5,20 @@
   "main": "index.js",
   "dependencies": {
     "bluebird": "^3.7.2",
+    "source-map-support": "^0.5.16",
     "uuid": "^7.0.2"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.46",
+    "@types/node": "^13.9.8",
     "serverless-domain-manager": "^3.3.1",
     "serverless-dynamodb-local": "^0.2.39",
     "serverless-offline": "^6.1.2",
     "serverless-webpack": "^5.3.1",
-    "webpack": "^4.42.1"
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
