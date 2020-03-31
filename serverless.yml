@@ -51,7 +51,7 @@ custom:
       migrate: true
 
   customDomain:
-    domainName: 'sls-sample.moboweb.com.br'
+    domainName: 'api-sample.moboweb.com.br'
     basePath: ${self:provider.stage}
     stage: ${self:provider.stage}
     createRoute53Record: true
