@@ -1,0 +1,22 @@
+{
+  "name": "server-sls-sample",
+  "version": "0.0.1",
+  "description": "Serverless sample",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "uuid": "^7.0.2"
+  },
+  "devDependencies": {
+    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-offline": "^6.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "serverless"
+  ],
+  "author": "Everton Takashi Nishiyama",
+  "license": "MIT"
+}

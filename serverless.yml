@@ -4,8 +4,69 @@ provider:
   name: aws
   runtime: nodejs12.x
   profile: sls-sample
-  stage: dev
+  stage: ${opt:stage, 'dev'}
+  versionFunctions: false
   region: us-east-2
+
+  package:
+    excludeDevDependencies: true
+    exclude:
+      - .git/**
+      - .idea/**
+      - .dynamodb/**
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource: "*"
+
+  environment: #Global Environment variables
+    ${file(./config/${self:provider.stage}.yml)}
+
+custom:
+  region: ${self:provider.region}
+  stage: ${opt:stage, self:provider.stage}
+  prefix: ${self:custom.stage}-${self:service}
+  process: ${self:custom.prefix}-process
+  config: ${self:custom.prefix}-config
+  dynamo-user: ${self:custom.prefix}-user
+  sns-logs: ${self:custom.prefix}-trigger-logs
+  sqs-logs: ${self:custom.prefix}-messages-logs
+
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      migrate: true
+      noStart: true
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+
+resources:
+  Resources:
+    UserTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:custom.dynamo-user}
 
 functions:
   getUser:
@@ -14,5 +75,5 @@ functions:
     description: Submit new user
     events:
       - http:
-         path: users
-         method: post
+          path: users
+          method: post
