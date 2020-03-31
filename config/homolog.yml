@@ -1,6 +1,6 @@
-ENV: dev
-MESSAGE: 'Development environment'
-USE_OFFLINE_DB: true
+ENV: homolog
+MESSAGE: 'Homologation environment'
+USE_OFFLINE_DB: false
 TABLE_USER: ${self:custom.dynamo-user}
 SQS_QUEUE_URL: 'https://sqs.${self:provider.region}.amazonaws.com/#{AWS::AccountId}/${self:custom.sqs-logs}'
 REGION: ${self:custom.region}

@@ -24,7 +24,8 @@ provider:
         - dynamodb:PutItem
       Resource: "*"
 
-  environment: #Global Environment variables
+  #Global Environment variables
+  environment:
     ${file(./config/${self:provider.stage}.yml)}
 
 custom:
@@ -43,7 +44,6 @@ custom:
     start:
       port: 8000
       migrate: true
-      noStart: true
 
 plugins:
   - serverless-dynamodb-local
