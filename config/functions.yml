@@ -6,3 +6,12 @@ postCreateUser:
     - http:
         path: users
         method: post
+
+getListUsers:
+  handler: api/read.getUsers
+  memorySize: 128
+  description: List all users
+  events:
+    - http:
+        path: users
+        method: get

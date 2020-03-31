@@ -55,6 +55,9 @@ plugins:
   - serverless-offline
   - serverless-webpack
 
+package:
+  individually: true
+
 resources:
   ${file(./config/resources.yml)}
 
