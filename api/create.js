@@ -4,7 +4,7 @@ const uuid = require('uuid');
 const dynamo = require('../lib/dynamo');
 const response = require('../lib/response');
 
-module.exports.getUser = async (event, context, callback) => {
+module.exports.postUser = async (event, context, callback) => {
   const body = JSON.parse(event.body);
 
   if (body === null) {
@@ -23,12 +23,12 @@ module.exports.getUser = async (event, context, callback) => {
   const user = buildUser(fullname, email);
 
   return dynamo.save(user)
-      .then(success => {
-        response.json(callback, success, 201);
-      })
-      .catch(err => {
-        response.json(callback, err, 500);
-      });
+    .then(success => {
+      response.json(callback, success, 201);
+    })
+    .catch(err => {
+      response.json(callback, err, 500);
+    });
 };
 
 const buildUser = (fullname, email) => {

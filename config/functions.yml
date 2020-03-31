@@ -1,0 +1,8 @@
+postCreateUser:
+  handler: api/create.postUser
+  memorySize: 128
+  description: Create new user
+  events:
+    - http:
+        path: users
+        method: post

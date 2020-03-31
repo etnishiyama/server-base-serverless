@@ -24,9 +24,8 @@ provider:
         - dynamodb:PutItem
       Resource: "*"
 
-  #Global Environment variables
   environment:
-    ${file(./config/${self:provider.stage}.yml)}
+    ${file(./config/env/${self:provider.stage}.yml)}
 
 custom:
   region: ${self:provider.region}
@@ -38,6 +37,12 @@ custom:
   sns-logs: ${self:custom.prefix}-trigger-logs
   sqs-logs: ${self:custom.prefix}-messages-logs
 
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    includeModules: false
+    packager: 'npm'
+    excludeFiles: src/**/*.test.js
+
   dynamodb:
     stages:
       - dev
@@ -48,32 +53,10 @@ custom:
 plugins:
   - serverless-dynamodb-local
   - serverless-offline
+  - serverless-webpack
 
 resources:
-  Resources:
-    UserTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: "id"
-            AttributeType: "S"
-        KeySchema:
-          - AttributeName: "id"
-            KeyType: "HASH"
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        StreamSpecification:
-          StreamViewType: "NEW_AND_OLD_IMAGES"
-        TableName: ${self:custom.dynamo-user}
+  ${file(./config/resources.yml)}
 
 functions:
-  getUser:
-    handler: api/handler.getUser
-    memorySize: 128
-    description: Submit new user
-    events:
-      - http:
-          path: users
-          method: post
+  ${file(./config/functions.yml)}
