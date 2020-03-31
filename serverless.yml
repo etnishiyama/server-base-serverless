@@ -50,10 +50,17 @@ custom:
       port: 8000
       migrate: true
 
+  customDomain:
+    domainName: 'sls-sample.moboweb.com.br'
+    basePath: ${self:provider.stage}
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+
 plugins:
   - serverless-dynamodb-local
   - serverless-offline
   - serverless-webpack
+  - serverless-domain-manager
 
 package:
   individually: true
