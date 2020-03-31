@@ -1,0 +1,18 @@
+service: sls-sample-user-service
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: sls-sample
+  stage: dev
+  region: us-east-2
+
+functions:
+  getUser:
+    handler: api/handler.getUser
+    memorySize: 128
+    description: Submit new user
+    events:
+      - http:
+         path: users
+         method: post
