@@ -2,22 +2,22 @@
 
 import * as uuid from 'uuid';
 import * as dynamo from '../lib/dynamo';
-import {response} from '../lib/response';
+import {errorResponse, response} from '../lib/response';
+import {InvalidParamsError, NullBodyError} from "../helper/error/http_client_error";
 
 export const postUser = async (event, _context) => {
   const body = JSON.parse(event.body);
 
   if (body === null) {
     console.error('Body is null');
-    return response({}, 400, 'Null body', 1);
+    return errorResponse({}, new NullBodyError);
   }
-
   const fullname = body.fullname;
   const email = body.email;
 
   if (typeof fullname !== 'string' || typeof email !== 'string') {
     console.error('Validation failed');
-    return response({}, 400, 'Validation failed', 2);
+    return errorResponse({}, new InvalidParamsError);
   }
 
   const user = buildUser(fullname, email);
