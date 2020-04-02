@@ -1,15 +1,16 @@
 'use strict';
 
 import {BaseHttpError} from "./base_http_error";
+import locale from '../../provider/locale_provider'
 
 export class NullBodyError extends BaseHttpError {
   constructor() {
-    super("Request body is null.", 400, 1);
+    super(locale.__('HTTP_ERROR_NULL_BODY'), 400, 1);
   }
 }
 
 export class InvalidParamsError extends BaseHttpError {
   constructor() {
-    super("Request has one or more invalid parameters.", 400, 2);
+    super(locale.__('HTTP_ERROR_INVALID_PARAMS'), 400, 2);
   }
 }

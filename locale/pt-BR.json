@@ -1,0 +1,4 @@
+{
+  "HTTP_ERROR_INVALID_PARAMS": "Requisição possui 1 ou mais parâmetros inválidos.",
+  "HTTP_ERROR_NULL_BODY": "Requsição possui corpo nulo."
+}

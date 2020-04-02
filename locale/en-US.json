@@ -1,0 +1,4 @@
+{
+  "HTTP_ERROR_INVALID_PARAMS": "Request has one or more invalid parameters.",
+  "HTTP_ERROR_NULL_BODY": "Request body is null."
+}

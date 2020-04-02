@@ -4,19 +4,19 @@ import * as uuid from 'uuid';
 import * as dynamo from '../lib/dynamo';
 import {errorResponse, response} from '../lib/response';
 import {InvalidParamsError, NullBodyError} from "../helper/error/http_client_error";
+import i18n from '../provider/locale_provider'
 
 export const postUser = async (event, _context) => {
+  i18n.setLocale(event.headers['Accept-Language']);
   const body = JSON.parse(event.body);
 
   if (body === null) {
-    console.error('Body is null');
     return errorResponse({}, new NullBodyError);
   }
   const fullname = body.fullname;
   const email = body.email;
 
   if (typeof fullname !== 'string' || typeof email !== 'string') {
-    console.error('Validation failed');
     return errorResponse({}, new InvalidParamsError);
   }
 
