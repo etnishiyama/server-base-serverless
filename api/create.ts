@@ -2,32 +2,26 @@
 
 import * as uuid from 'uuid';
 import * as dynamo from '../lib/dynamo';
-import {errorResponse, response} from '../lib/response';
-import {InvalidParamsError, NullBodyError} from "../helper/error/http_client_error";
+import {response} from '../lib/response';
 import i18n from '../provider/locale_provider'
+import {userSchema} from "../model/user_schema";
+import {validateRequestBody} from "../helper/validation_helper";
 
 export const postUser = async (event, _context) => {
   i18n.setLocale(event.headers['Accept-Language']);
-  const body = JSON.parse(event.body);
 
-  if (body === null) {
-    return errorResponse({}, new NullBodyError);
-  }
-  const fullname = body.fullname;
-  const email = body.email;
-
-  if (typeof fullname !== 'string' || typeof email !== 'string') {
-    return errorResponse({}, new InvalidParamsError);
-  }
-
-  const user = buildUser(fullname, email);
-
-  return dynamo.save(user)
+  return validateRequestBody(event.body, userSchema)
+    .then(body => {
+      const user = buildUser(body.fullname, body.email);
+      return dynamo.save(user);
+    })
     .then(success => {
       return response(success, 201);
     })
     .catch(err => {
-      return response(err, 500);
+      if (err.headers)
+        return err;
+      return response({}, 500);
     });
 };
 

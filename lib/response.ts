@@ -1,6 +1,6 @@
 'use strict';
 
-import {BaseError} from "../helper/error/base_http_error";
+import {BaseHttpError} from "../helper/error/base_http_error";
 
 export const response = (body = {}, httpStatus = 200, message = 'Sucesso', errorCode = 0) => {
   return {
@@ -16,7 +16,7 @@ export const response = (body = {}, httpStatus = 200, message = 'Sucesso', error
   };
 };
 
-export const errorResponse = (body = {}, error: BaseError) => {
+export const errorResponse = (body = {}, error: BaseHttpError) => {
   return {
     headers: {
       "Access-Control-Allow-Origin": "*"

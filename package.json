@@ -6,6 +6,7 @@
   "dependencies": {
     "bluebird": "^3.7.2",
     "i18n": "^0.8.6",
+    "joi": "^14.3.1",
     "source-map-support": "^0.5.16",
     "uuid": "^7.0.2"
   },

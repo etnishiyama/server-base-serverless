@@ -14,3 +14,9 @@ export class InvalidParamsError extends BaseHttpError {
     super(locale.__('HTTP_ERROR_INVALID_PARAMS'), 400, 2);
   }
 }
+
+export class InvalidJsonError extends BaseHttpError {
+  constructor() {
+    super(locale.__('HTTP_ERROR_INVALID_JSON'), 422, 3);
+  }
+}
