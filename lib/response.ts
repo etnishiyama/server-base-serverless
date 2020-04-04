@@ -16,7 +16,7 @@ export const response = (body = {}, httpStatus = 200, message = 'Sucesso', error
   };
 };
 
-export const errorResponse = (body = {}, error: BaseHttpError) => {
+export const errorResponse = (error: BaseHttpError) => {
   return {
     headers: {
       "Access-Control-Allow-Origin": "*"
@@ -25,7 +25,7 @@ export const errorResponse = (body = {}, error: BaseHttpError) => {
     body: JSON.stringify({
       message: error.message,
       errorCode: error.errorCode,
-      data: body,
+      data: error.data,
     })
   };
 };

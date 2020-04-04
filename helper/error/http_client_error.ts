@@ -10,8 +10,8 @@ export class NullBodyError extends BaseHttpError {
 }
 
 export class InvalidParamsError extends BaseHttpError {
-  constructor() {
-    super(locale.__('HTTP_ERROR_INVALID_PARAMS'), 400, 2);
+  constructor(data: string) {
+    super(locale.__('HTTP_ERROR_INVALID_PARAMS'), 400, 2, data);
   }
 }
 

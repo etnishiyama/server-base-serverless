@@ -2,34 +2,37 @@
 
 import * as uuid from 'uuid';
 import * as dynamo from '../lib/dynamo';
-import {response} from '../lib/response';
+import {errorResponse, response} from '../lib/response';
 import i18n from '../provider/locale_provider'
-import {userSchema} from "../model/user_schema";
 import {validateRequestBody} from "../helper/validation_helper";
+import {BaseHttpError} from "../helper/error/base_http_error";
+import {makeUser} from "../model/user_model";
 
 export const postUser = async (event, _context) => {
   i18n.setLocale(event.headers['Accept-Language']);
 
-  return validateRequestBody(event.body, userSchema)
+  return validateRequestBody(event.body)
     .then((body: any) => {
-      const user = buildUser(body.fullname, body.email);
-      return dynamo.save(user);
+      return makeUser(body);
+    })
+    .then((user: any) => {
+      return dynamo.save(buildUser(user));
     })
     .then(success => {
       return response(success, 201);
     })
     .catch(error => {
-      if (error.body) return error;
+      if (error instanceof BaseHttpError) return errorResponse(error);
       return response({}, 500);
     });
 };
 
-const buildUser = (fullname, email) => {
+const buildUser = ({fullName, email}) => {
   const currentTimestamp = new Date().getTime();
 
   return {
     id: uuid.v1(),
-    fullname: fullname,
+    fullName: fullName,
     email: email,
     createdAt: currentTimestamp,
     updatedAt: currentTimestamp,
