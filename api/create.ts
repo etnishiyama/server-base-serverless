@@ -11,16 +11,15 @@ export const postUser = async (event, _context) => {
   i18n.setLocale(event.headers['Accept-Language']);
 
   return validateRequestBody(event.body, userSchema)
-    .then(body => {
+    .then((body: any) => {
       const user = buildUser(body.fullname, body.email);
       return dynamo.save(user);
     })
     .then(success => {
       return response(success, 201);
     })
-    .catch(err => {
-      if (err.headers)
-        return err;
+    .catch(error => {
+      if (error.body) return error;
       return response({}, 500);
     });
 };
