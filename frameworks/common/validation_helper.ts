@@ -1,6 +1,6 @@
 'use strict';
 
-import {InvalidJsonError, NullBodyError} from "./error/http_client_error";
+import {InvalidJsonError, NullBodyError} from "../error/http_client_error";
 
 export const validateRequestBody = (body: string) => {
 

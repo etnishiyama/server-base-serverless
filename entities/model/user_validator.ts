@@ -1,6 +1,6 @@
 'use strict';
 
-import {InvalidParamsError} from "../helper/error/http_client_error";
+import {InvalidParamsError} from "../../frameworks/error/http_client_error";
 import joi from 'joi';
 
 export const userValidator = (schema) => (body) => {

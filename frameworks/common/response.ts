@@ -1,6 +1,6 @@
 'use strict';
 
-import {BaseHttpError} from "../helper/error/base_http_error";
+import {BaseHttpError} from "../error/base_http_error";
 
 export const response = (body = {}, httpStatus = 200, message = 'Sucesso', errorCode = 0) => {
   return {

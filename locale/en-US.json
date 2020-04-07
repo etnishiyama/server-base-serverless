@@ -1,5 +1,6 @@
 {
-  "HTTP_ERROR_INVALID_PARAMS": "Request has one or more invalid parameters.",
-  "HTTP_ERROR_NULL_BODY": "Request body is null.",
-  "HTTP_ERROR_INVALID_JSON": "Invalid body JSON syntax."
+  "ERROR_HTTP_INVALID_PARAMS": "Request has one or more invalid parameters.",
+  "ERROR_HTTP_NULL_BODY": "Request body is null.",
+  "ERROR_HTTP_INVALID_JSON": "Invalid body JSON syntax.",
+  "ERROR_SERVER_NOT_IMPLEMENTED_METHOD": "Method not implemented."
 }

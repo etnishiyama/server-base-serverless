@@ -1,5 +1,6 @@
 {
-  "HTTP_ERROR_INVALID_PARAMS": "Requisição possui 1 ou mais parâmetros inválidos.",
-  "HTTP_ERROR_NULL_BODY": "Requsição possui corpo nulo.",
-  "HTTP_ERROR_INVALID_JSON": "Corpo da requisição inválido."
+  "ERROR_HTTP_INVALID_PARAMS": "Requisição possui 1 ou mais parâmetros inválidos.",
+  "ERROR_HTTP_NULL_BODY": "Requsição possui corpo vazio.",
+  "ERROR_HTTP_INVALID_JSON": "Corpo da requisição inválido.",
+  "ERROR_SERVER_NOT_IMPLEMENTED_METHOD": "Método não implementado."
 }

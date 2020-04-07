@@ -1,5 +1,5 @@
 postCreateUser:
-  handler: api/create.postUser
+  handler: controllers/create.postUser
   memorySize: 128
   description: Create new user
   events:
@@ -8,7 +8,7 @@ postCreateUser:
         method: post
 
 getListUsers:
-  handler: api/read.getUsers
+  handler: controllers/read.getUsers
   memorySize: 128
   description: List all users
   events:
