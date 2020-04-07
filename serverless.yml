@@ -1,4 +1,4 @@
-service: sls-sample-user-service
+service: api-sample-service
 
 provider:
   name: aws
@@ -64,9 +64,6 @@ plugins:
   - serverless-webpack
   - serverless-domain-manager
   - serverless-offline
-
-package:
-  individually: true
 
 resources:
   ${file(./config/resources.yml)}
