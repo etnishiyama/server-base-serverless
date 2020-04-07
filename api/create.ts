@@ -6,7 +6,7 @@ import {errorResponse, response} from '../lib/response';
 import i18n from '../provider/locale_provider'
 import {validateRequestBody} from "../helper/validation_helper";
 import {BaseHttpError} from "../helper/error/base_http_error";
-import {makeUser} from "../model/user_model";
+import {makeUser} from "../model/user";
 
 export const postUser = async (event, _context) => {
   i18n.setLocale(event.headers['Accept-Language']);

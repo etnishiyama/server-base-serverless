@@ -1,15 +1,8 @@
 'use strict';
 
-import {InvalidParamsError} from "../helper/error/http_client_error";
+import {buildUser} from "./user_builder";
+import {userValidator} from "./user_validator";
+import {userSchema} from "./user_schema";
 
-export const buildUser = (validator) => ({fullName, email}) => {
-  return new Promise((resolve, reject) => {
-    if (validator({fullName, email})) {
-      resolve({
-        fullName: fullName,
-        email: email
-      })
-    }
-    reject(new InvalidParamsError(null));
-  })
-};
+const validator = userValidator(userSchema);
+export const makeUser = buildUser(validator);
