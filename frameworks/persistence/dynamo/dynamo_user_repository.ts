@@ -1,7 +1,8 @@
 'use strict';
 
 import {UserRepository} from "../../../app/contracts/user_repository";
-import {dynamoBuildUser} from "../../../entities/db/dynamo/dynamo_user_builder";
+import {dynamoDocumentBuilder} from "./dynamo_document_builder";
+import {User} from "../../../entities/model/user_model";
 
 const tableUser = process.env.TABLE_USER;
 
@@ -12,11 +13,11 @@ export class DynamoUserRepository extends UserRepository {
   }
 
   // Add new user document.
-  add(_user) {
-    const user = dynamoBuildUser(_user);
+  add(user: User) {
+    const doc = dynamoDocumentBuilder(user);
     const params = {
       TableName: tableUser,
-      Item: user
+      Item: doc
     };
 
     return this.databaseClient.put(params).promise();
@@ -41,7 +42,6 @@ export class DynamoUserRepository extends UserRepository {
   // Execute a DynamoDB Scan.
   scan(params, _limit) {
     params.TableName = tableUser;
-
     return this.databaseClient.scan(params).promise();
   }
 

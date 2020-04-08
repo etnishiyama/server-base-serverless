@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/server-sls-sample.iml" filepath="$PROJECT_DIR$/.idea/server-sls-sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/server-base-serverless.iml" filepath="$PROJECT_DIR$/.idea/server-base-serverless.iml" />
     </modules>
   </component>
 </project>
