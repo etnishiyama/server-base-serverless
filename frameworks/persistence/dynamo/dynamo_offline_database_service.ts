@@ -22,8 +22,4 @@ export class DynamoOfflineDatabaseService extends DatabaseService {
     const dynamoClient = new aws.DynamoDB.DocumentClient();
     this.userRepository = new DynamoUserRepository(dynamoClient);
   }
-
-  initDatabase() {
-    // Do nothing
-  }
 }

@@ -1,5 +1,6 @@
 ENV: homolog
 MESSAGE: 'Homologation environment'
 TABLE_USER: ${self:custom.dynamo-user}
+SQS_ADDRESS: ${self:custom.sqs-local-address}
 SQS_QUEUE_URL: 'https://sqs.${self:provider.region}.amazonaws.com/#{AWS::AccountId}/${self:custom.sqs-user}'
 REGION: ${self:custom.region}

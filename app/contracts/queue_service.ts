@@ -1,21 +1,12 @@
 'use strict';
 
-import {NotImplementedMethodError} from "../../frameworks/error/http_server_error";
+import {SqsClient} from "./sqs_client";
 
 export class QueueService {
 
+  client: SqsClient;
+
   constructor() {
-  }
-
-  send(_message: any): Promise<any> {
-    throw new NotImplementedMethodError();
-  }
-
-  receive(_count: number): Promise<any> {
-    throw new NotImplementedMethodError();
-  }
-
-  remove(_message: any): Promise<any> {
-    throw new NotImplementedMethodError();
+    this.client = null;
   }
 }

@@ -41,6 +41,7 @@ provider:
     ${file(./config/env/${self:provider.stage}.yml)}
 
 custom:
+  sqs-local-address: 'http://localhost:9324'
   region: ${self:provider.region}
   stage: ${opt:stage, self:provider.stage}
   prefix: ${self:custom.stage}-${self:service}
@@ -64,6 +65,13 @@ custom:
       port: 8000
       migrate: true
 
+  serverless-offline-sqs-esmq:
+    apiVersion: '2012-11-05'
+    endpoint: ${self:custom.sqs-local-address}
+    region: us-east-2
+    accessKeyId: root
+    secretAccessKey: root
+
   customDomain:
     domainName: 'api-sample.moboweb.com.br'
     certificateName: 'api-sample.moboweb.com.br'
@@ -77,6 +85,7 @@ plugins:
   - serverless-pseudo-parameters
   - serverless-dynamodb-local
   - serverless-webpack
+  - serverless-offline-sqs-esmq
   - serverless-domain-manager
   - serverless-offline
 

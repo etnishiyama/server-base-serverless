@@ -5,7 +5,7 @@ import {BaseHttpError} from "../frameworks/error/base_http_error";
 import {databaseService, localeService, queueService} from '../config/project_dependencies';
 import {useCaseAddUser} from "../use_cases/add_user";
 
-const addUser = useCaseAddUser(databaseService.userRepository, queueService);
+const addUser = useCaseAddUser(databaseService.userRepository, queueService.client);
 
 export const postUser = async (event, _context) => {
   localeService.setLocale(event.headers['Accept-Language']);
