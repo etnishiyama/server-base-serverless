@@ -56,7 +56,7 @@ custom:
     webpackConfig: 'webpack.config.js'
     includeModules: true
     packager: 'npm'
-    excludeFiles: src/**/*.test.js
+    excludeFiles: src/**/*.test.ts
 
   dynamodb:
     stages:
@@ -64,6 +64,8 @@ custom:
     start:
       port: 8000
       migrate: true
+      convertEmptyValues: true
+      dbPath: './frameworks/persistence/dynamodb'
 
   serverless-offline-sqs-esmq:
     apiVersion: '2012-11-05'
