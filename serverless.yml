@@ -24,16 +24,31 @@ provider:
         - dynamodb:PutItem
       Resource: "*"
 
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+      Resource: "*"
+
+    - Effect: Allow
+      Action:
+        - sqs:DeleteMessage
+        - sqs:ReceiveMessage
+        - sqs:SendMessage
+      Resource: arn:aws:sqs:*:*:*
+
   environment:
     ${file(./config/env/${self:provider.stage}.yml)}
 
 custom:
+  sqs-local-address: 'http://localhost:9324'
   region: ${self:provider.region}
   stage: ${opt:stage, self:provider.stage}
   prefix: ${self:custom.stage}-${self:service}
   process: ${self:custom.prefix}-process
   config: ${self:custom.prefix}-config
   dynamo-user: ${self:custom.prefix}-user
+  sqs-user: ${self:custom.prefix}-user
   sns-logs: ${self:custom.prefix}-trigger-logs
   sqs-logs: ${self:custom.prefix}-messages-logs
 
@@ -50,6 +65,13 @@ custom:
       port: 8000
       migrate: true
 
+  serverless-offline-sqs-esmq:
+    apiVersion: '2012-11-05'
+    endpoint: ${self:custom.sqs-local-address}
+    region: us-east-2
+    accessKeyId: root
+    secretAccessKey: root
+
   customDomain:
     domainName: 'api-sample.moboweb.com.br'
     certificateName: 'api-sample.moboweb.com.br'
@@ -60,8 +82,10 @@ custom:
     securityPolicy: tls_1_2
 
 plugins:
+  - serverless-pseudo-parameters
   - serverless-dynamodb-local
   - serverless-webpack
+  - serverless-offline-sqs-esmq
   - serverless-domain-manager
   - serverless-offline
 

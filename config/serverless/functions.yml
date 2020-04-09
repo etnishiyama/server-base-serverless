@@ -6,7 +6,6 @@ postCreateUser:
     - http:
         path: users
         method: post
-
 getListUsers:
   handler: controllers/read.getUsers
   memorySize: 128
@@ -15,3 +14,11 @@ getListUsers:
     - http:
         path: users
         method: get
+sampleQueueHandler:
+  handler: controllers/sqs.readUser
+  events:
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - ApiSampleQueue
+            - Arn
