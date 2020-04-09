@@ -18,6 +18,7 @@
     "serverless-domain-manager": "^3.3.1",
     "serverless-dynamodb-local": "^0.2.39",
     "serverless-offline": "^6.1.2",
+    "serverless-pseudo-parameters": "^2.5.0",
     "serverless-webpack": "^5.3.1",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",

@@ -15,3 +15,9 @@ Resources:
       StreamSpecification:
         StreamViewType: "NEW_AND_OLD_IMAGES"
       TableName: ${self:custom.dynamo-user}
+  ApiSampleQueue:
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: ${self:custom.sqs-user}
+      MessageRetentionPeriod: 1209600
+      VisibilityTimeout: 60

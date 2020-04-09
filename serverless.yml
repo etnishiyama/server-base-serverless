@@ -24,6 +24,19 @@ provider:
         - dynamodb:PutItem
       Resource: "*"
 
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+      Resource: "*"
+
+    - Effect: Allow
+      Action:
+        - sqs:DeleteMessage
+        - sqs:ReceiveMessage
+        - sqs:SendMessage
+      Resource: arn:aws:sqs:*:*:*
+
   environment:
     ${file(./config/env/${self:provider.stage}.yml)}
 
@@ -34,6 +47,7 @@ custom:
   process: ${self:custom.prefix}-process
   config: ${self:custom.prefix}-config
   dynamo-user: ${self:custom.prefix}-user
+  sqs-user: ${self:custom.prefix}-user
   sns-logs: ${self:custom.prefix}-trigger-logs
   sqs-logs: ${self:custom.prefix}-messages-logs
 
@@ -60,6 +74,7 @@ custom:
     securityPolicy: tls_1_2
 
 plugins:
+  - serverless-pseudo-parameters
   - serverless-dynamodb-local
   - serverless-webpack
   - serverless-domain-manager
