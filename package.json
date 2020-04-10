@@ -27,6 +27,9 @@
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
+    "start": "sls offline start",
+    "homolog": "sls deploy --stage homolog -v",
+    "prod": "sls deploy --stage prod -v",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
