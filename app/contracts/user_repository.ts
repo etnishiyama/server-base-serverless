@@ -23,7 +23,7 @@ export class UserRepository {
     throw new NotImplementedMethodError();
   }
 
-  scan(_params: any, _limit: number): Promise<any> {
+  scan(_pageSize: number, _search: string, _lastIndex: string): Promise<any> {
     throw new NotImplementedMethodError();
   }
 

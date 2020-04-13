@@ -35,4 +35,18 @@ export class HttpResponseService extends ResponseService {
       })
     };
   }
+
+  successPaginate(body: any = {}, total: number, lastEvaluatedIndex: string, httpStatus: number = 200,
+    message: string = localeService.translate('HTTP_SUCCESS_DEFAULT')): any {
+    return {
+      statusCode: httpStatus,
+      headers: headers,
+      body: JSON.stringify({
+        message: message,
+        total: total,
+        lastEvaluatedIndex: lastEvaluatedIndex,
+        data: body,
+      })
+    };
+  }
 }

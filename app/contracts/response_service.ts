@@ -8,7 +8,12 @@ export class ResponseService {
   constructor() {
   }
 
-  success(_body: any, _httpStatus: number, _message: string, _errorCode: number): Promise<any> {
+  success(_body: any, _httpStatus: number, _message: string): Promise<any> {
+    throw new NotImplementedMethodError();
+  }
+
+  successPaginate(_body: any, _total: number, _lastEvaluatedIndex: string, _httpStatus: number,
+    _message: string): Promise<any> {
     throw new NotImplementedMethodError();
   }
 

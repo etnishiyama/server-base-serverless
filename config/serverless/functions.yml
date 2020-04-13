@@ -1,5 +1,5 @@
 postCreateUser:
-  handler: controllers/create.postUser
+  handler: app/controllers/create.postUser
   memorySize: 128
   description: Create new user
   events:
@@ -7,7 +7,7 @@ postCreateUser:
         path: users
         method: post
 getListUsers:
-  handler: controllers/read.getUsers
+  handler: app/controllers/read.getUsers
   memorySize: 128
   description: List all users
   events:
@@ -15,7 +15,7 @@ getListUsers:
         path: users
         method: get
 sampleQueueHandler:
-  handler: controllers/sqs.readUser
+  handler: app/controllers/sqs.readUser
   events:
     - sqs:
         arn:

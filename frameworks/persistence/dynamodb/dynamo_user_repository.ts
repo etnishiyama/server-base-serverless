@@ -40,9 +40,21 @@ export class DynamoUserRepository extends UserRepository {
   }
 
   // Execute a DynamoDB Scan.
-  scan(params, _limit) {
+  async scan(pageSize, search, lastIndex) {
+    const params: any = {};
     params.TableName = tableUser;
-    return this.databaseClient.scan(params).promise();
+    params.Limit = process.env.PAGINATION_DEFAULT_SIZE;
+
+    if (search) {
+      params.FilterExpression = 'contains(#fullName, :search) or contains(#email, :search)';
+      params.ExpressionAttributeValues = {':search': search};
+      params.ExpressionAttributeNames = {
+        '#fullName': 'fullName',
+        '#email': 'email'
+      };
+    }
+
+    return Promise.resolve(this.paginate(params, pageSize, lastIndex));
   }
 
   // Update expression based on id.
@@ -79,5 +91,23 @@ export class DynamoUserRepository extends UserRepository {
     };
 
     return this.databaseClient.delete(params).promise();
+  }
+
+  async paginate(params, pageSize, lastIndex) {
+    let results: any = [];
+
+    while (results.length < pageSize) {
+      if (lastIndex) params.ExclusiveStartKey = {id: lastIndex};
+      const docs: any = await this.databaseClient.scan(params).promise();
+      results = results.concat(docs.Items.slice(0, pageSize - results.length));
+      if (!docs.LastEvaluatedKey) break;
+      lastIndex = docs.LastEvaluatedKey.id;
+    }
+
+    return {
+      lastEvaluatedKey: results.length > 0 ? results[results.length - 1].id : null,
+      items: results,
+      total: results.length
+    };
   }
 }

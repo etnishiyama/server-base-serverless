@@ -1,9 +1,9 @@
 'use strict';
 
-import {BaseHttpError} from "../frameworks/error/base_http_error";
-import {databaseService, localeService, queueService, responseService} from '../config/project_dependencies';
-import {useCaseAddUser} from "../use_cases/add_user";
-import {InternalServerError} from "../frameworks/error/http_server_error";
+import {BaseHttpError} from "../../frameworks/error/base_http_error";
+import {databaseService, localeService, queueService, responseService} from '../../config/project_dependencies';
+import {useCaseAddUser} from "../../use_cases/add_user";
+import {InternalServerError} from "../../frameworks/error/http_server_error";
 
 const addUser = useCaseAddUser(databaseService.userRepository, queueService.client);
 
