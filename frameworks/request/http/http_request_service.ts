@@ -1,15 +1,30 @@
 'use strict';
 
-import {ResponseService} from "../../../app/contracts/response_service";
+import {RequestService} from "../../../app/contracts/request_service";
 import {BaseHttpError} from "../../error/base_http_error";
 import {localeService} from "../../../config/project_dependencies";
+import {InvalidJsonException, NullBodyException} from "../../error/http_client_error";
 
 const headers = {"Access-Control-Allow-Origin": "*"};
 
-export class HttpResponseService extends ResponseService {
+export class HttpRequestService extends RequestService {
 
   constructor() {
     super();
+  }
+
+  validateBody(body: any): Promise<any> {
+    if (body === null) {
+      throw new NullBodyException;
+    }
+
+    try {
+      body = JSON.parse(body);
+    } catch {
+      throw new InvalidJsonException();
+    }
+
+    return Promise.resolve(body);
   }
 
   success(body: any = {}, httpStatus: number = 200,

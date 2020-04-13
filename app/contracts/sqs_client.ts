@@ -1,6 +1,6 @@
 'use strict';
 
-import {NotImplementedMethodError} from "../../frameworks/error/http_server_error";
+import {NotImplementedMethodException} from "../../frameworks/error/http_server_error";
 
 export class SqsClient {
 
@@ -11,14 +11,14 @@ export class SqsClient {
   }
 
   send(_message: any): Promise<any> {
-    throw new NotImplementedMethodError();
+    throw new NotImplementedMethodException();
   }
 
   receive(_count: number): Promise<any> {
-    throw new NotImplementedMethodError();
+    throw new NotImplementedMethodException();
   }
 
   remove(_message: any): Promise<any> {
-    throw new NotImplementedMethodError();
+    throw new NotImplementedMethodException();
   }
 }

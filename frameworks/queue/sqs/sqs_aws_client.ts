@@ -1,6 +1,6 @@
 'use strict';
 
-import {InvalidParamsError} from "../../error/http_client_error";
+import {InvalidParamsException} from "../../error/http_client_error";
 import {Promise} from 'bluebird';
 import {SqsClient} from "../../../app/contracts/sqs_client";
 
@@ -31,7 +31,7 @@ export class SqsAwsClient extends SqsClient {
   }
 
   remove(message: any): Promise<any> {
-    if (message === null || message === undefined) throw new InvalidParamsError(null);
+    if (message === null || message === undefined) throw new InvalidParamsException(null);
 
     const params = {
       QueueUrl: queueUrl,

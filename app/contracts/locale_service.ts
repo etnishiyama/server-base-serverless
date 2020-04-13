@@ -1,6 +1,6 @@
 'use strict';
 
-import {NotImplementedMethodError} from "../../frameworks/error/http_server_error";
+import {NotImplementedMethodException} from "../../frameworks/error/http_server_error";
 
 export class LocaleService {
 
@@ -8,14 +8,14 @@ export class LocaleService {
   }
 
   translate(_key: string): string {
-    throw new NotImplementedMethodError();
+    throw new NotImplementedMethodException();
   }
 
   translatePlural(_key: string, _count: number): string {
-    throw new NotImplementedMethodError();
+    throw new NotImplementedMethodException();
   }
 
   setLocale(_locale: string) {
-    throw new NotImplementedMethodError();
+    throw new NotImplementedMethodException();
   }
 }
