@@ -51,7 +51,7 @@ export class HttpRequestService extends RequestService {
     };
   }
 
-  successPaginate(body: any = {}, total: number, lastEvaluatedIndex: string, httpStatus: number = 200,
+  successPaginate(body: any = {}, total: number, lastIndex: string, httpStatus: number = 200,
     message: string = localeService.translate('HTTP_SUCCESS_DEFAULT')): any {
     return {
       statusCode: httpStatus,
@@ -59,7 +59,7 @@ export class HttpRequestService extends RequestService {
       body: JSON.stringify({
         message: message,
         total: total,
-        lastEvaluatedIndex: lastEvaluatedIndex,
+        lastEvaluatedIndex: lastIndex,
         data: body,
       })
     };

@@ -1,7 +1,6 @@
 ENV: dev
 MESSAGE: 'Development environment'
 TABLE_USER: ${self:custom.dynamo-user}
-SQS_ADDRESS: ${self:custom.sqs-local-address}
-SQS_QUEUE_URL: '${self:custom.sqs-local-address}/queue/${self:custom.sqs-user}'
+SQS_QUEUE_URL: ${self:custom.sqs-local-address}/queue/${self:custom.sqs-user}
 REGION: ${self:custom.region}
 PAGINATION_DEFAULT_SIZE: 10000

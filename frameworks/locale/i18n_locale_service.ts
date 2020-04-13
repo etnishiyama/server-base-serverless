@@ -2,13 +2,9 @@
 
 import {LocaleService} from "../../app/contracts/locale_service";
 import i18n from 'i18n';
+import * as config from '../../config/locales/locale-service.json'
 
-i18n.configure({
-  locales: ['en-US', 'pt-BR'],
-  defaultLocale: 'en-US',
-  directory: './config/locales',
-  updateFiles: false
-});
+i18n.configure(config);
 
 export class I18nLocaleService extends LocaleService {
 

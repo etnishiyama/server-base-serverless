@@ -6,7 +6,6 @@ import * as aws from 'aws-sdk';
 import * as bluebird from 'bluebird';
 
 export class DynamoDatabaseService extends DatabaseService {
-
   constructor() {
     super();
     aws.config.setPromisesDependency(bluebird);

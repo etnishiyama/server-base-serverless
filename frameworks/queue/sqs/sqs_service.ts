@@ -6,7 +6,6 @@ import * as aws from 'aws-sdk';
 import {SqsAwsClient} from "./sqs_aws_client";
 
 export class SqsService extends QueueService {
-
   constructor() {
     super();
     aws.config.setPromisesDependency(bluebird);
