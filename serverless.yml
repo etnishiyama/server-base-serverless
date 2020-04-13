@@ -75,8 +75,8 @@ custom:
     secretAccessKey: root
 
   customDomain:
-    domainName: 'api-sample.moboweb.com.br'
-    certificateName: 'api-sample.moboweb.com.br'
+    domainName: ${file(./config/secret/${self:provider.stage}-secret-vars.json):CUSTOM_DOMAIN}
+    certificateName: ${file(./config/secret/${self:provider.stage}-secret-vars.json):CUSTOM_DOMAIN}
     basePath: ${self:provider.stage}
     stage: ${self:provider.stage}
     createRoute53Record: true
