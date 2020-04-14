@@ -4,7 +4,7 @@ import {DatabaseService} from "../../../app/contracts/database_service";
 import {DynamoUserRepository} from "./dynamo_user_repository";
 import * as aws from 'aws-sdk';
 import * as bluebird from 'bluebird';
-import * as config from '../../../config/dynamodb/dynamodb-offline.json';
+import config from '../../../config/dynamodb/dynamodb-offline.json';
 
 /**
  * Implementation of the DynamoDB offline service.

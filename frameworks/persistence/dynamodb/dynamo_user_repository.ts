@@ -15,7 +15,6 @@ export class DynamoUserRepository extends UserRepository {
     super(databaseClient);
   }
 
-  // Add new user document.
   add(user: User) {
     const doc = dynamoDocumentBuilder(user);
     const params = {
@@ -26,30 +25,22 @@ export class DynamoUserRepository extends UserRepository {
     return this.databaseClient.put(params).promise();
   }
 
-  // Find one row by it`s id.
-  find(where) {
+  get(id) {
     const params = {
       TableName: tableUser,
-      Key: where
+      Key: {id: id}
     };
 
     return this.databaseClient.get(params).promise();
   }
 
-  // Execute a Raw Select Query on DynamoTable. Must inform the KeyConditionExpression and ExpressionAttributeNames.
-  query(where) {
-    where.TableName = tableUser;
-    return this.databaseClient.query(where).promise();
-  }
-
-  // Execute a DynamoDB Scan.
   async scan(pageSize, search, lastIndex) {
     const params: any = {};
     params.TableName = tableUser;
     params.Limit = process.env.PAGINATION_DEFAULT_SIZE;
 
     if (search) {
-      params.FilterExpression = 'contains(#fullName, :search) or contains(#email, :search)';
+      params.FilterExpression = 'attribute_not_exists(deletedAt) and (contains(#fullName, :search) or contains(#email, :search))';
       params.ExpressionAttributeValues = {':search': search};
       params.ExpressionAttributeNames = {
         '#fullName': 'fullName',
@@ -60,40 +51,60 @@ export class DynamoUserRepository extends UserRepository {
     return Promise.resolve(this.paginate(params, pageSize, lastIndex));
   }
 
-  // Update expression based on id.
-  update(key, expression, values) {
+  updateItem(key, item) {
+    const updateParams = this.buildDynamoUpdateExpression(item);
     const params = {
       TableName: tableUser,
-      Key: key,
-      UpdateExpression: expression,
-      ExpressionAttributeValues: values,
-      ReturnValues: "UPDATED_NEW"
-    };
-
-    return this.databaseClient.update(params).promise();
-  }
-
-  // Update item identified by id.
-  updateItem(key, attributes) {
-    const params = {
-      TableName: tableUser,
-      Key: key,
+      Key: {id: key},
       ReturnValues: "ALL_NEW",
-      AttributeUpdates: attributes
+      UpdateExpression: updateParams.UpdateExpression,
+      ExpressionAttributeValues: updateParams.ExpressionAttributeValues,
     };
 
     return this.databaseClient.update(params).promise();
   }
 
-  // Remove a row from DynamoDB based on id.
-  removeItem(key) {
+  removeItem(id) {
     const params = {
       TableName: tableUser,
-      Key: key,
+      Key: {id: id},
       ReturnValues: "ALL_OLD"
     };
 
     return this.databaseClient.delete(params).promise();
+  }
+
+  inactivateUser(key: string) {
+    const currentTimestamp = new Date().getTime();
+    const newUser = {
+      deletedAt: currentTimestamp
+    };
+
+    return this.updateItem(key, newUser);
+  }
+
+  buildDynamoUpdateExpression(modifiedItem): any {
+    let updateExpression = "";
+    let attributeValues = {};
+
+    for (let [key, value] of Object.entries(modifiedItem)) {
+      if (updateExpression === "") {
+        updateExpression = 'set ';
+      } else {
+        updateExpression = updateExpression + ', ';
+      }
+
+      updateExpression = updateExpression + key + ' = :' + key;
+      attributeValues[':' + key] = value;
+    }
+
+    updateExpression = updateExpression + ', updatedAt = :updatedAt';
+    attributeValues[':updatedAt'] = new Date().getTime();
+
+    return {
+      UpdateExpression: updateExpression,
+      ExpressionAttributeValues: attributeValues
+    }
   }
 
   /**

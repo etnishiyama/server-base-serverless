@@ -14,6 +14,18 @@ getListUsers:
     - http:
         path: users
         method: get
+deleteInactivateUser:
+  handler: app/controllers/delete.inactivateUser
+  memorySize: 128
+  description: Inactivate one user based on id
+  events:
+    - http:
+        path: users/{id}
+        method: delete
+        request:
+          parameters:
+            paths:
+            id: true
 sampleQueueHandler:
   handler: app/controllers/sqs.readUser
   events:

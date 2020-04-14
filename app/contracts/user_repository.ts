@@ -24,17 +24,9 @@ export class UserRepository {
 
   /**
    * Get one user from the repository.
-   * @param _where query to search for a user.
+   * @param _id id of a user.
    */
-  find(_where: any): Promise<any> {
-    throw new NotImplementedMethodException();
-  }
-
-  /**
-   * Search for primary key operators, faster search.
-   * @param _where query to search for a user.
-   */
-  query(_where: any): Promise<any> {
+  get(_id: string): Promise<any> {
     throw new NotImplementedMethodException();
   }
 
@@ -49,29 +41,27 @@ export class UserRepository {
   }
 
   /**
-   * Update user.
-   * @param _key user id.
-   * @param _expression expression to update.
-   * @param _values values to update.
-   */
-  update(_key: string, _expression: any, _values: any): Promise<any> {
-    throw new NotImplementedMethodException();
-  }
-
-  /**
    * Update one user.
-   * @param _key user id.
+   * @param _id user id.
    * @param _attributes params and values that will be updated.
    */
-  updateItem(_key: string, _attributes: any): Promise<any> {
+  updateItem(_id: string, _attributes: any): Promise<any> {
     throw new NotImplementedMethodException();
   }
 
   /**
    * Remove one item from repository.
-   * @param _key user id.
+   * @param _id user id.
    */
-  removeItem(_key: string): Promise<any> {
+  removeItem(_id: string): Promise<any> {
+    throw new NotImplementedMethodException();
+  }
+
+  /**
+   * Inactivate one user from repository.
+   * @param _id user id.
+   */
+  inactivateUser(_id: string): Promise<any> {
     throw new NotImplementedMethodException();
   }
 }

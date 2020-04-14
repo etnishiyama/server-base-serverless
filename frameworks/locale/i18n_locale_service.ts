@@ -2,7 +2,7 @@
 
 import {LocaleService} from "../../app/contracts/locale_service";
 import i18n from 'i18n';
-import * as config from '../../config/locales/locale-service.json'
+import config from '../../config/locales/locale-service.json'
 
 i18n.configure(config);
 

@@ -4,5 +4,5 @@
   "endpoint": "http://localhost:9324",
   "sslEnabled": false,
   "accessKeyId": "MOCK_ACCESS_KEY_ID",
-  "secretAccessKey": "MOCK_SECRET_ACCESS_KEY",
+  "secretAccessKey": "MOCK_SECRET_ACCESS_KEY"
 }
