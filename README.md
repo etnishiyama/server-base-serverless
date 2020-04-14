@@ -21,3 +21,6 @@ To get the project up and running you will need:
  - $ npm install
  - $ ./start_local_services.sh
  - $ npm start
+ 
+ ## Additional
+ Medium post: https://medium.com/@etnishiyama/going-serverless-with-node-js-and-clean-architecture-a365208816ba
