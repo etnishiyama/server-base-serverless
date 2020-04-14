@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Base HTTP error class.
+ */
 export class BaseHttpError extends Error {
 
   public httpStatus: number;

@@ -6,6 +6,9 @@ import {SqsClient} from "../../../app/contracts/sqs_client";
 
 const queueUrl = process.env.SQS_QUEUE_URL;
 
+/**
+ * Implementation of the AWS SQS Queue client.
+ */
 export class SqsAwsClient extends SqsClient {
 
   constructor(sqsClient) {

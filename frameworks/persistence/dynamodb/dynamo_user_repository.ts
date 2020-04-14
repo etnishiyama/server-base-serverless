@@ -6,6 +6,9 @@ import {User} from "../../../entities/model/user_model";
 
 const tableUser = process.env.TABLE_USER;
 
+/**
+ * Implementation of the DynamoDB user repository.
+ */
 export class DynamoUserRepository extends UserRepository {
 
   constructor(databaseClient) {
@@ -93,6 +96,12 @@ export class DynamoUserRepository extends UserRepository {
     return this.databaseClient.delete(params).promise();
   }
 
+  /**
+   * DynamoDB pagination.
+   * @param params dynamodb query params.
+   * @param pageSize nmax umber of items to be returned.
+   * @param lastIndex id to start database scan.
+   */
   async paginate(params, pageSize, lastIndex) {
     let results: any = [];
 

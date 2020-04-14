@@ -6,6 +6,9 @@ import * as config from '../../config/locales/locale-service.json'
 
 i18n.configure(config);
 
+/**
+ * Implementation of i18n as the locale service.
+ */
 export class I18nLocaleService extends LocaleService {
 
   constructor() {

@@ -5,6 +5,9 @@ import * as bluebird from 'bluebird';
 import * as aws from 'aws-sdk';
 import {SqsAwsClient} from "./sqs_aws_client";
 
+/**
+ * Implementation of the AWS SQS Queue client.
+ */
 export class SqsService extends QueueService {
   constructor() {
     super();

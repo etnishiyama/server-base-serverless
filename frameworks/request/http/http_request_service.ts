@@ -7,6 +7,9 @@ import {InvalidJsonException, NullBodyException} from "../../error/http_client_e
 
 const headers = {"Access-Control-Allow-Origin": "*"};
 
+/**
+ * Implementation of the request service for HTTP protocol.
+ */
 export class HttpRequestService extends RequestService {
 
   constructor() {

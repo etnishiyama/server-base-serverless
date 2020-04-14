@@ -6,6 +6,9 @@ import * as aws from 'aws-sdk';
 import {SqsAwsClient} from "./sqs_aws_client";
 import * as config from '../../../config/sqs/sqs-offline.json';
 
+/**
+ * Implementation of the AWS SQS offline Queue client.
+ */
 export class SqsOfflineService extends QueueService {
 
   constructor() {

@@ -6,6 +6,9 @@ import * as aws from 'aws-sdk';
 import * as bluebird from 'bluebird';
 import * as config from '../../../config/dynamodb/dynamodb-offline.json';
 
+/**
+ * Implementation of the DynamoDB offline service.
+ */
 export class DynamoOfflineDatabaseService extends DatabaseService {
   constructor() {
     super();

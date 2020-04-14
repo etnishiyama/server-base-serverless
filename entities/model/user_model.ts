@@ -1,6 +1,10 @@
 'use strict';
 
+/**
+ * User POJO class.
+ */
 export class User {
+
   fullName;
   email;
 
