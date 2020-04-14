@@ -1,0 +1,60 @@
+postCreateUser:
+  handler: app/controllers/create.postUser
+  memorySize: 128
+  description: Create new user
+  events:
+    - http:
+        path: users
+        method: post
+getListUsers:
+  handler: app/controllers/read.getUsers
+  memorySize: 128
+  description: List all users
+  events:
+    - http:
+        path: users
+        method: get
+getUser:
+  handler: app/controllers/read.getUser
+  memorySize: 128
+  description: Get one user based on it`s id
+  events:
+    - http:
+        path: users/{id}
+        method: get
+        request:
+          parameters:
+            paths:
+            id: true
+updateUser:
+  handler: app/controllers/update.updateUser
+  memorySize: 128
+  description: Update one user based on it`s id
+  events:
+    - http:
+        path: users/{id}
+        method: put
+        request:
+          parameters:
+            paths:
+            id: true
+deleteInactivateUser:
+  handler: app/controllers/delete.inactivateUser
+  memorySize: 128
+  description: Inactivate one user based on id
+  events:
+    - http:
+        path: users/{id}
+        method: delete
+        request:
+          parameters:
+            paths:
+            id: true
+sampleQueueHandler:
+  handler: app/controllers/sqs.readUser
+  events:
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - ApiSampleQueue
+            - Arn

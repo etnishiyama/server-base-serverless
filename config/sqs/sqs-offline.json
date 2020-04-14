@@ -1,0 +1,8 @@
+{
+  "apiVersion": "2012-11-05",
+  "region": "us-east-2",
+  "endpoint": "http://localhost:9324",
+  "sslEnabled": false,
+  "accessKeyId": "MOCK_ACCESS_KEY_ID",
+  "secretAccessKey": "MOCK_SECRET_ACCESS_KEY"
+}

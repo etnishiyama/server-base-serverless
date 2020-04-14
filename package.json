@@ -1,0 +1,51 @@
+{
+  "name": "server-base-serverless",
+  "version": "0.0.1",
+  "description": "Moboweb Serverless boilerplate",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "i18n": "^0.8.6",
+    "joi": "^14.3.1",
+    "source-map-support": "^0.5.16",
+    "uuid": "^7.0.3"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.48",
+    "@types/node": "^13.11.1",
+    "@typescript-eslint/eslint-plugin": "^2.28.0",
+    "@typescript-eslint/parser": "^2.28.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.5",
+    "serverless": "^1.67.3",
+    "serverless-domain-manager": "^3.3.1",
+    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-offline": "^6.1.4",
+    "serverless-offline-sqs-esmq": "^1.0.0",
+    "serverless-pseudo-parameters": "^2.5.0",
+    "serverless-webpack": "^5.3.1",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "scripts": {
+    "start": "sls offline start",
+    "homolog": "sls deploy --stage homolog -v",
+    "prod": "sls deploy --stage prod -v",
+    "lint": "eslint . --ext .ts",
+    "lint-fix": "eslint . --ext .ts --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "serverless"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-fix"
+    }
+  },
+  "author": "Everton Takashi Nishiyama",
+  "license": "MIT"
+}

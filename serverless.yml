@@ -1,0 +1,98 @@
+service: api-sample-service
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: sls-sample
+  stage: ${opt:stage, 'dev'}
+  versionFunctions: false
+  region: us-east-2
+
+  package:
+    excludeDevDependencies: true
+    exclude:
+      - .git/**
+      - .idea/**
+      - .dynamodb/**
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource: "*"
+
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+      Resource: "*"
+
+    - Effect: Allow
+      Action:
+        - sqs:DeleteMessage
+        - sqs:ReceiveMessage
+        - sqs:SendMessage
+      Resource: arn:aws:sqs:*:*:*
+
+  environment:
+    ${file(./config/env/${self:provider.stage}.yml)}
+
+custom:
+  sqs-local-address: 'http://localhost:9324'
+  region: ${self:provider.region}
+  stage: ${opt:stage, self:provider.stage}
+  prefix: ${self:custom.stage}-${self:service}
+  process: ${self:custom.prefix}-process
+  config: ${self:custom.prefix}-config
+  dynamo-user: ${self:custom.prefix}-user
+  sqs-user: ${self:custom.prefix}-user
+  sns-logs: ${self:custom.prefix}-trigger-logs
+  sqs-logs: ${self:custom.prefix}-messages-logs
+
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    includeModules: true
+    packager: 'npm'
+    excludeFiles: src/**/*.test.ts
+
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      migrate: true
+      convertEmptyValues: true
+      dbPath: './frameworks/persistence/dynamodb'
+
+  serverless-offline-sqs-esmq:
+    apiVersion: '2012-11-05'
+    endpoint: ${self:custom.sqs-local-address}
+    region: us-east-2
+    accessKeyId: root
+    secretAccessKey: root
+
+  customDomain:
+    domainName: ${file(./config/secret/${self:provider.stage}-secret-vars.json):CUSTOM_DOMAIN}
+    certificateName: ${file(./config/secret/${self:provider.stage}-secret-vars.json):CUSTOM_DOMAIN}
+    basePath: ${self:provider.stage}
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+    endpointType: 'regional'
+    securityPolicy: tls_1_2
+
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-dynamodb-local
+  - serverless-webpack
+  - serverless-offline-sqs-esmq
+  - serverless-domain-manager
+  - serverless-offline
+
+resources:
+  ${file(./config/serverless/resources.yml)}
+
+functions:
+  ${file(./config/serverless/functions.yml)}

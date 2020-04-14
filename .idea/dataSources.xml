@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="shared-local-instance" uuid="096cf21e-846c-451a-9516-a64df59034a0">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/shared-local-instance.db</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="shared-local-instance [2]" uuid="5d6ce7c1-9a28-4ac5-8b9c-1fc340c636e7">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/frameworks/persistence/dynamodb/shared-local-instance.db</jdbc-url>
+    </data-source>
+  </component>
+</project>
