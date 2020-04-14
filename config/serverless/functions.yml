@@ -26,6 +26,18 @@ getUser:
           parameters:
             paths:
             id: true
+updateUser:
+  handler: app/controllers/update.updateUser
+  memorySize: 128
+  description: Update one user based on it`s id
+  events:
+    - http:
+        path: users/{id}
+        method: put
+        request:
+          parameters:
+            paths:
+            id: true
 deleteInactivateUser:
   handler: app/controllers/delete.inactivateUser
   memorySize: 128
