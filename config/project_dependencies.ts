@@ -1,5 +1,3 @@
-'use strict';
-
 import {I18nLocaleService} from "../frameworks/locale/i18n_locale_service";
 import {DynamoDatabaseService} from "../frameworks/persistence/dynamodb/dynamo_database_service";
 import {DynamoOfflineDatabaseService} from "../frameworks/persistence/dynamodb/dynamo_offline_database_service";

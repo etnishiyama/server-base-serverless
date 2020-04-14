@@ -1,5 +1,3 @@
-'use strict';
-
 import {BaseHttpError} from "./base_http_error";
 import {localeService} from "../../config/project_dependencies";
 

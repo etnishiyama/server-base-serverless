@@ -1,39 +1,25 @@
-'use strict';
-
-import {NotImplementedMethodException} from "../../frameworks/error/http_server_error";
-
 /**
  * SQS client contract.
  */
-export class SqsClient {
+export interface SqsClient {
 
-  sqsClient;
-
-  constructor(sqsClient) {
-    this.sqsClient = sqsClient;
-  }
+  sqsClient: any;
 
   /**
    * Send a message to the SQS client.
    * @param _message message to be sent.
    */
-  send(_message: any): Promise<any> {
-    throw new NotImplementedMethodException();
-  }
+  send(_message: any): Promise<any>;
 
   /**
    * Get a number of messages from the SQS client.
    * @param _count number of messages that will be retrieved.
    */
-  receive(_count: number): Promise<any> {
-    throw new NotImplementedMethodException();
-  }
+  receive(_count: number): Promise<any>;
 
   /**
    * Remove messages from the SQS client.
    * @param _message message that will be removed.
    */
-  remove(_message: any): Promise<any> {
-    throw new NotImplementedMethodException();
-  }
+  remove(_message: any): Promise<any>;
 }

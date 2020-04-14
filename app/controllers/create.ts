@@ -1,5 +1,3 @@
-'use strict';
-
 import {BaseHttpError} from "../../frameworks/error/base_http_error";
 import {databaseService, localeService, queueService, requestService} from '../../config/project_dependencies';
 import {useCaseAddUser} from "../../use_cases/add_user";

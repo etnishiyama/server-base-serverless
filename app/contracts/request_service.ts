@@ -1,20 +1,15 @@
-'use strict';
-
-import {NotImplementedMethodException} from "../../frameworks/error/http_server_error";
 import {BaseHttpError} from "../../frameworks/error/base_http_error";
 
 /**
  * RESTful api request contract.
  */
-export class  RequestService {
+export interface RequestService {
 
   /**
    * Validate the request body.
    * @param _body request body.
    */
-  validateBody(_body: any): Promise<unknown> {
-    throw new NotImplementedMethodException();
-  }
+  validateBody(_body: any): Promise<unknown>;
 
   /**
    * Successful response for a request.
@@ -22,9 +17,7 @@ export class  RequestService {
    * @param _httpStatus response http status that will be returned.
    * @param _message localized message.
    */
-  success(_body: any, _httpStatus: number, _message: string): Promise<any> {
-    throw new NotImplementedMethodException();
-  }
+  success(_body: any, _httpStatus: number, _message: string): Promise<any>;
 
   /**
    * Successful response for a request with pagination.
@@ -35,15 +28,11 @@ export class  RequestService {
    * @param _message localized message.
    */
   successPaginate(_body: any, _total: number, _lastEvaluatedIndex: string, _httpStatus: number,
-    _message: string): Promise<any> {
-    throw new NotImplementedMethodException();
-  }
+    _message: string): Promise<any>;
 
   /**
    * Error response for a request.
    * @param _error a {@link BaseHttpError} that will be returned after the request was processed.
    */
-  error(_error: BaseHttpError): Promise<any> {
-    throw new NotImplementedMethodException();
-  }
+  error(_error: BaseHttpError): Promise<any>;
 }

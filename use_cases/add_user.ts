@@ -1,6 +1,4 @@
-'use strict';
-
-import {buildUser} from "../entities/model/user";
+import {makeUser} from "../entities/model/user";
 import {UserRepository} from "../app/contracts/user_repository";
 import {Promise} from 'bluebird';
 import * as uuid from 'uuid';
@@ -12,7 +10,7 @@ import {SqsClient} from "../app/contracts/sqs_client";
  * @param sqsClient queue that the id of the user will be sent.
  */
 export const useCaseAddUser = (repository: UserRepository, sqsClient: SqsClient) => (body): Promise<any> => {
-  return buildUser(body)
+  return makeUser(body)
     .then(user => {
       user.id = uuid.v1();
       return Promise.all([

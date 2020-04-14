@@ -1,5 +1,3 @@
-'use strict';
-
 import {UserRepository} from "../../../app/contracts/user_repository";
 import {dynamoDocumentBuilder} from "./dynamo_document_builder";
 import {User} from "../../../entities/model/user_model";
@@ -9,10 +7,12 @@ const tableUser = process.env.TABLE_USER;
 /**
  * Implementation of the DynamoDB user repository.
  */
-export class DynamoUserRepository extends UserRepository {
+export class DynamoUserRepository implements UserRepository {
+
+  databaseClient: any = null;
 
   constructor(databaseClient) {
-    super(databaseClient);
+    this.databaseClient = databaseClient;
   }
 
   add(user: User) {

@@ -1,5 +1,3 @@
-'use strict';
-
 import {UserRepository} from "../app/contracts/user_repository";
 
 /**

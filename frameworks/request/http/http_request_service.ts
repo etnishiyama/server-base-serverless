@@ -1,5 +1,3 @@
-'use strict';
-
 import {RequestService} from "../../../app/contracts/request_service";
 import {BaseHttpError} from "../../error/base_http_error";
 import {localeService} from "../../../config/project_dependencies";
@@ -10,11 +8,7 @@ const headers = {"Access-Control-Allow-Origin": "*"};
 /**
  * Implementation of the request service for HTTP protocol.
  */
-export class HttpRequestService extends RequestService {
-
-  constructor() {
-    super();
-  }
+export class HttpRequestService implements RequestService {
 
   validateBody(body: any) {
     if (body === null) {
