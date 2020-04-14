@@ -6,16 +6,13 @@ import {BaseHttpError} from "../../frameworks/error/base_http_error";
 /**
  * RESTful api request contract.
  */
-export class RequestService {
-
-  constructor() {
-  }
+export class  RequestService {
 
   /**
    * Validate the request body.
    * @param _body request body.
    */
-  validateBody(_body: any): Promise<any> {
+  validateBody(_body: any): Promise<unknown> {
     throw new NotImplementedMethodException();
   }
 

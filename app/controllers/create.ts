@@ -7,7 +7,7 @@ import {InternalServerException} from "../../frameworks/error/http_server_error"
 
 const addUser = useCaseAddUser(databaseService.userRepository, queueService.client);
 
-export const postUser = async (event, _context) => {
+export const postUser = async (event, _context): Promise<any> => {
   localeService.setLocale(event.headers['Accept-Language']);
 
   return requestService.validateBody(event.body)

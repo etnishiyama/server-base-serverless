@@ -24,7 +24,7 @@ export class SqsAwsClient extends SqsClient {
     return this.sqsClient.sendMessage(params).promise();
   }
 
-  receive(count: number = 1): Promise<any> {
+  receive(count = 1): Promise<any> {
     const params = {
       QueueUrl: queueUrl,
       MaxNumberOfMessages: count

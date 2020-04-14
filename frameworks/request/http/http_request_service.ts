@@ -16,7 +16,7 @@ export class HttpRequestService extends RequestService {
     super();
   }
 
-  validateBody(body: any): Promise<any> {
+  validateBody(body: any) {
     if (body === null) {
       throw new NullBodyException;
     }
@@ -30,20 +30,19 @@ export class HttpRequestService extends RequestService {
     return Promise.resolve(body);
   }
 
-  success(body: any = {}, httpStatus: number = 200,
-    message: string = localeService.translate('HTTP_SUCCESS_DEFAULT')): any {
-    return {
+  success(body: any = {}, httpStatus = 200, message: string = localeService.translate('HTTP_SUCCESS_DEFAULT')) {
+    return Promise.resolve({
       statusCode: httpStatus,
       headers: headers,
       body: JSON.stringify({
         message: message,
         data: body,
       })
-    };
+    });
   }
 
-  error(error: BaseHttpError): any {
-    return {
+  error(error: BaseHttpError) {
+    return Promise.resolve({
       headers: headers,
       statusCode: error.httpStatus,
       body: JSON.stringify({
@@ -51,12 +50,12 @@ export class HttpRequestService extends RequestService {
         errorCode: error.errorCode,
         data: error.data,
       })
-    };
+    });
   }
 
-  successPaginate(body: any = {}, total: number, lastIndex: string, httpStatus: number = 200,
-    message: string = localeService.translate('HTTP_SUCCESS_DEFAULT')): any {
-    return {
+  successPaginate(body: any = {}, total: number, lastIndex: string, httpStatus = 200,
+    message: string = localeService.translate('HTTP_SUCCESS_DEFAULT')) {
+    return Promise.resolve({
       statusCode: httpStatus,
       headers: headers,
       body: JSON.stringify({
@@ -65,6 +64,6 @@ export class HttpRequestService extends RequestService {
         lastEvaluatedIndex: lastIndex,
         data: body,
       })
-    };
+    });
   }
 }

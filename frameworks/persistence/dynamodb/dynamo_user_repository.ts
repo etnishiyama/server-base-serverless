@@ -71,7 +71,7 @@ export class DynamoUserRepository extends UserRepository {
     };
 
     return this.databaseClient.update(params).promise();
-  };
+  }
 
   // Update item identified by id.
   updateItem(key, attributes) {

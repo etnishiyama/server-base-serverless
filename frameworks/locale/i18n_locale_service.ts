@@ -15,11 +15,11 @@ export class I18nLocaleService extends LocaleService {
     super();
   }
 
-  translate(key: string): string {
+  translate(key: string) {
     return i18n.__(key);
   }
 
-  translatePlural(key: string, count: number): string {
+  translatePlural(key: string, count: number) {
     return i18n.__N(key, count);
   }
 

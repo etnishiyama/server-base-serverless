@@ -7,12 +7,12 @@ import {InternalServerException} from "../../frameworks/error/http_server_error"
 
 const getAllUsers = useCaseGetAllUsers(databaseService.userRepository);
 
-export const getUsers = async (event, _context) => {
+export const getUsers = async (event, _context): Promise<any> => {
   localeService.setLocale(event.headers['Accept-Language']);
   const {pageSize, lastIndex, search} = event.queryStringParameters;
 
   return getAllUsers(pageSize, lastIndex, search)
-    .then(result => requestService.successPaginate(result.items, result.total, result.lastEvaluatedKey))
+    .then((result: any) => requestService.successPaginate(result.items, result.total, result.lastEvaluatedKey))
     .catch(error => {
       if (error instanceof BaseHttpError) return requestService.error(error);
       return requestService.error(new InternalServerException(error));

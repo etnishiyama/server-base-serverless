@@ -7,9 +7,6 @@ import {NotImplementedMethodException} from "../../frameworks/error/http_server_
  */
 export class LocaleService {
 
-  constructor() {
-  }
-
   /**
    * Translate one phrase referenced by a key.
    * @param _key reference for the phrase that will be translated.
@@ -31,7 +28,7 @@ export class LocaleService {
    * Set the idiom of the translation.
    * @param _locale the locale that should be used on the translation.
    */
-  setLocale(_locale: string) {
+  setLocale(_locale: string): void {
     throw new NotImplementedMethodException();
   }
 }
