@@ -85,9 +85,9 @@ export class DynamoUserRepository extends UserRepository {
 
   buildDynamoUpdateExpression(modifiedItem): any {
     let updateExpression = "";
-    let attributeValues = {};
+    const attributeValues = {};
 
-    for (let [key, value] of Object.entries(modifiedItem)) {
+    for (const [key, value] of Object.entries(modifiedItem)) {
       if (updateExpression === "") {
         updateExpression = 'set ';
       } else {

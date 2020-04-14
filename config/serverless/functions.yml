@@ -14,6 +14,18 @@ getListUsers:
     - http:
         path: users
         method: get
+getUser:
+  handler: app/controllers/read.getUser
+  memorySize: 128
+  description: Get one user based on it`s id
+  events:
+    - http:
+        path: users/{id}
+        method: get
+        request:
+          parameters:
+            paths:
+            id: true
 deleteInactivateUser:
   handler: app/controllers/delete.inactivateUser
   memorySize: 128
