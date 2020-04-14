@@ -1,5 +1,3 @@
-'use strict';
-
 import {QueueService} from "../../../app/contracts/queue_service";
 import * as bluebird from 'bluebird';
 import * as aws from 'aws-sdk';

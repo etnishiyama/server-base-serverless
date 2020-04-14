@@ -1,5 +1,3 @@
-'use strict';
-
 import {databaseService, localeService, requestService} from '../../config/project_dependencies';
 import {BaseHttpError} from "../../frameworks/error/base_http_error";
 import {InternalServerException} from "../../frameworks/error/http_server_error";

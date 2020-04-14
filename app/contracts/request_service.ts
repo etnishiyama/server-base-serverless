@@ -1,5 +1,3 @@
-'use strict';
-
 import {NotImplementedMethodException} from "../../frameworks/error/http_server_error";
 import {BaseHttpError} from "../../frameworks/error/base_http_error";
 

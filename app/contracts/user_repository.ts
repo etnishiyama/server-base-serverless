@@ -1,5 +1,3 @@
-'use strict';
-
 import {NotImplementedMethodException} from "../../frameworks/error/http_server_error";
 import {User} from "../../entities/model/user_model";
 

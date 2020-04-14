@@ -1,5 +1,3 @@
-'use strict';
-
 import {LocaleService} from "../../app/contracts/locale_service";
 import i18n from 'i18n';
 import config from '../../config/locales/locale-service.json'

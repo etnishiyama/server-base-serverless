@@ -1,5 +1,3 @@
-'use strict';
-
 import {UserRepository} from "../../../app/contracts/user_repository";
 import {dynamoDocumentBuilder} from "./dynamo_document_builder";
 import {User} from "../../../entities/model/user_model";

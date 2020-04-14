@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Base HTTP error class.
  */

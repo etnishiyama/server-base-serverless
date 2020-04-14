@@ -1,5 +1,3 @@
-'use strict';
-
 import {RequestService} from "../../../app/contracts/request_service";
 import {BaseHttpError} from "../../error/base_http_error";
 import {localeService} from "../../../config/project_dependencies";

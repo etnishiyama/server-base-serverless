@@ -1,5 +1,3 @@
-'use strict';
-
 import {UserRepository} from "./user_repository";
 
 /**

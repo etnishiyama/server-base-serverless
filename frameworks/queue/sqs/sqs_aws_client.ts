@@ -1,5 +1,3 @@
-'use strict';
-
 import {InvalidParamsException} from "../../error/http_client_error";
 import {Promise} from 'bluebird';
 import {SqsClient} from "../../../app/contracts/sqs_client";

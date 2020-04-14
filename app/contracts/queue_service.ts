@@ -1,5 +1,3 @@
-'use strict';
-
 import {SqsClient} from "./sqs_client";
 
 /**

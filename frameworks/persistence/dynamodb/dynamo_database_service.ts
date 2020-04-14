@@ -1,5 +1,3 @@
-'use strict';
-
 import {DatabaseService} from "../../../app/contracts/database_service";
 import {DynamoUserRepository} from "./dynamo_user_repository";
 import * as aws from 'aws-sdk';
