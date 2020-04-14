@@ -7,7 +7,7 @@ Base serverless RESTful API structure following clean architecture patterns. Tec
   - SQS;
   - Internationalization;
 
-## Pre-requisites
+## Prerequisites
 To get the project up and running you will need:
  - Aws account;
  - Docker;
