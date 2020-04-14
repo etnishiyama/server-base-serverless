@@ -3,11 +3,6 @@ import {UserRepository} from "./user_repository";
 /**
  * Database service contract.
  */
-export class DatabaseService {
-
+export interface DatabaseService {
   userRepository: UserRepository;
-
-  constructor() {
-    this.userRepository = null;
-  }
 }

@@ -8,11 +8,7 @@ const headers = {"Access-Control-Allow-Origin": "*"};
 /**
  * Implementation of the request service for HTTP protocol.
  */
-export class HttpRequestService extends RequestService {
-
-  constructor() {
-    super();
-  }
+export class HttpRequestService implements RequestService {
 
   validateBody(body: any) {
     if (body === null) {

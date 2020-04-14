@@ -7,10 +7,12 @@ const queueUrl = process.env.SQS_QUEUE_URL;
 /**
  * Implementation of the AWS SQS Queue client.
  */
-export class SqsAwsClient extends SqsClient {
+export class SqsAwsClient implements SqsClient {
 
-  constructor(sqsClient) {
-    super(sqsClient);
+  sqsClient: any = null;
+
+  constructor(sqsClient: any) {
+    this.sqsClient = sqsClient;
   }
 
   send(message: any): Promise<any> {

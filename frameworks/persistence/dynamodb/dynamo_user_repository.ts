@@ -7,10 +7,12 @@ const tableUser = process.env.TABLE_USER;
 /**
  * Implementation of the DynamoDB user repository.
  */
-export class DynamoUserRepository extends UserRepository {
+export class DynamoUserRepository implements UserRepository {
+
+  databaseClient: any = null;
 
   constructor(databaseClient) {
-    super(databaseClient);
+    this.databaseClient = databaseClient;
   }
 
   add(user: User) {
