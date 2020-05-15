@@ -7,7 +7,7 @@ const updateRepositoryUser = useCaseUpdateUser(databaseService.userRepository);
 
 export const updateUser = async (event, _context): Promise<any> => {
   localeService.setLocale(event.headers['Accept-Language']);
-  const {id} = event.pathParameters;
+  const {id} = event.pathParameters || {};
 
   return requestService.validateBody(event.body)
     .then(body => updateRepositoryUser(id, body))

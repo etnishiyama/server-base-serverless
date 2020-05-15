@@ -9,7 +9,7 @@ const getOneUser = useCaseGetOneUser(databaseService.userRepository);
 
 export const getUsers = async (event, _context): Promise<any> => {
   localeService.setLocale(event.headers['Accept-Language']);
-  const {pageSize, lastIndex, search} = event.queryStringParameters;
+  const {pageSize, lastIndex, search} = event.queryStringParameters || {};
 
   return getAllUsers(pageSize, lastIndex, search)
     .then((result: any) => requestService.successPaginate(result.items, result.total, result.lastEvaluatedKey))
