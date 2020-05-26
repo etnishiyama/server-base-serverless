@@ -2,6 +2,7 @@ import {RequestService} from "../../../app/contracts/request_service";
 import {BaseHttpError} from "../../error/base_http_error";
 import {localeService} from "../../../config/project_dependencies";
 import {InvalidJsonException, NullBodyException} from "../../error/http_client_error";
+import {Promise} from 'bluebird';
 
 const headers = {"Access-Control-Allow-Origin": "*"};
 
@@ -10,21 +11,24 @@ const headers = {"Access-Control-Allow-Origin": "*"};
  */
 export class HttpRequestService implements RequestService {
 
-  validateBody(body: any) {
-    if (body === null) {
-      throw new NullBodyException;
-    }
+  validateBody(body: any): Promise<any> {
+    return new Promise((resolve) => {
+      if (body === null) {
+        throw new NullBodyException;
+      }
 
-    try {
-      body = JSON.parse(body);
-    } catch {
-      throw new InvalidJsonException();
-    }
+      try {
+        body = JSON.parse(body);
+      } catch {
+        throw new InvalidJsonException();
+      }
 
-    return Promise.resolve(body);
+      resolve(body);
+    })
   }
 
-  success(body: any = {}, httpStatus = 200, message: string = localeService.translate('HTTP_SUCCESS_DEFAULT')) {
+  success(body: any = {}, httpStatus = 200,
+    message: string = localeService.translate('HTTP_SUCCESS_DEFAULT')): Promise<any> {
     return Promise.resolve({
       statusCode: httpStatus,
       headers: headers,
@@ -32,10 +36,10 @@ export class HttpRequestService implements RequestService {
         message: message,
         data: body,
       })
-    });
+    })
   }
 
-  error(error: BaseHttpError) {
+  error(error: BaseHttpError): Promise<any> {
     return Promise.resolve({
       headers: headers,
       statusCode: error.httpStatus,
@@ -48,7 +52,7 @@ export class HttpRequestService implements RequestService {
   }
 
   successPaginate(body: any = {}, total: number, lastIndex: string, httpStatus = 200,
-    message: string = localeService.translate('HTTP_SUCCESS_DEFAULT')) {
+    message: string = localeService.translate('HTTP_SUCCESS_DEFAULT')): Promise<any> {
     return Promise.resolve({
       statusCode: httpStatus,
       headers: headers,
