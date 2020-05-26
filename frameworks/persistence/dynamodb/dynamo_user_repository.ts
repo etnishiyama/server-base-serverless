@@ -37,7 +37,8 @@ export class DynamoUserRepository implements UserRepository {
   async scan(pageSize, search, lastIndex) {
     const params: any = {};
     params.TableName = tableUser;
-    params.Limit = process.env.PAGINATION_DEFAULT_SIZE;
+    params.Limit = process.env.DYNAMODB_SCAN_DEFAULT_SIZE;
+    pageSize = pageSize || process.env.PAGINATION_DEFAULT_SIZE;
 
     if (search) {
       params.FilterExpression = 'attribute_not_exists(deletedAt) and (contains(#fullName, :search) or contains(#email, :search))';

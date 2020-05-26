@@ -3,4 +3,5 @@ MESSAGE: 'Production environment'
 TABLE_USER: ${self:custom.dynamo-user}
 SQS_QUEUE_URL: https://sqs.${self:provider.region}.amazonaws.com/#{AWS::AccountId}/${self:custom.sqs-user}
 REGION: ${self:custom.region}
-PAGINATION_DEFAULT_SIZE: 1000
+DYNAMODB_SCAN_DEFAULT_SIZE: 10000
+PAGINATION_DEFAULT_SIZE: 20

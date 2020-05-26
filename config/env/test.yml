@@ -1,0 +1,7 @@
+ENV: test
+MESSAGE: 'Test environment'
+TABLE_USER: ${self:custom.dynamo-user}
+SQS_QUEUE_URL: ${self:custom.sqs-local-address}/queue/${self:custom.sqs-user}
+REGION: ${self:custom.region}
+DYNAMODB_SCAN_DEFAULT_SIZE: 10000
+PAGINATION_DEFAULT_SIZE: 20
