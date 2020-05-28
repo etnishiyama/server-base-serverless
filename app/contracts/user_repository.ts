@@ -45,4 +45,18 @@ export interface UserRepository {
    * @param _id user id.
    */
   inactivateUser(_id: string): Promise<any>;
+
+  /**
+   * Add new item to array.
+   * @param _id user id.
+   * @param _attributes params and values that will be updated.
+   */
+  addItemsToArray(_id: string, _attributes: any): Promise<any>;
+
+  /**
+   * Remove item from array.
+   * @param _id user id.
+   * @param _attributes params and values that will be updated.
+   */
+  removeItemsFromArray(_id: string, _attributes: any): Promise<any>;
 }
