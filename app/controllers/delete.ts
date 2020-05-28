@@ -7,7 +7,7 @@ const inactiveUser = useCaseInactivateUser(databaseService.userRepository);
 
 export const inactivateUser = async (event, _context): Promise<any> => {
   localeService.setLocale(event.headers['Accept-Language']);
-  const {id} = event.pathParameters;
+  const {id} = event.pathParameters || {};
 
   return inactiveUser(id)
     .then(user => requestService.success(user, 201))

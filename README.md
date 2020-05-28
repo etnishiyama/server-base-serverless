@@ -19,6 +19,8 @@ To get the project up and running you will need:
 
 ## Install dependencies and run
  - $ npm install
+ - $ sls create_domain (if necessary, also create a certificate for the custom domain)
+ - $ sls dynamodb install
  - $ ./start_local_services.sh
  - $ npm start
  

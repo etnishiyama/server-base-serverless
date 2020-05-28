@@ -37,7 +37,8 @@ export class DynamoUserRepository implements UserRepository {
   async scan(pageSize, search, lastIndex) {
     const params: any = {};
     params.TableName = tableUser;
-    params.Limit = process.env.PAGINATION_DEFAULT_SIZE;
+    params.Limit = process.env.DYNAMODB_SCAN_DEFAULT_SIZE;
+    pageSize = pageSize || process.env.PAGINATION_DEFAULT_SIZE;
 
     if (search) {
       params.FilterExpression = 'attribute_not_exists(deletedAt) and (contains(#fullName, :search) or contains(#email, :search))';
@@ -83,6 +84,32 @@ export class DynamoUserRepository implements UserRepository {
     return this.updateItem(key, newUser);
   }
 
+  addItemsToArray(id: string, attributes: any): Promise<any> {
+    const updateParams = this.buildDynamoAddItemsToSetExpression(attributes);
+    const params = {
+      TableName: tableUser,
+      Key: {id: id},
+      ReturnValues: "ALL_NEW",
+      UpdateExpression: updateParams.UpdateExpression,
+      ExpressionAttributeValues: updateParams.ExpressionAttributeValues,
+    };
+
+    return this.databaseClient.update(params).promise();
+  }
+
+  removeItemsFromArray(id: string, attributes: any): Promise<any> {
+    const updateParams = this.buildDynamoRemoveItemsFromSetExpression(attributes);
+    const params = {
+      TableName: tableUser,
+      Key: {id: id},
+      ReturnValues: "ALL_NEW",
+      UpdateExpression: updateParams.UpdateExpression,
+      ExpressionAttributeValues: updateParams.ExpressionAttributeValues,
+    };
+
+    return this.databaseClient.update(params).promise();
+  }
+
   buildDynamoUpdateExpression(modifiedItem): any {
     let updateExpression = "";
     const attributeValues = {};
@@ -100,6 +127,45 @@ export class DynamoUserRepository implements UserRepository {
 
     updateExpression = updateExpression + ', updatedAt = :updatedAt';
     attributeValues[':updatedAt'] = new Date().getTime();
+
+    return {
+      UpdateExpression: updateExpression,
+      ExpressionAttributeValues: attributeValues
+    }
+  }
+
+  buildDynamoAddItemsToArrayExpression(items): any {
+    return this.buildDynamoArrayUpdateExpression(false, 'set', items);
+  }
+
+  buildDynamoAddItemsToSetExpression(items): any {
+    return this.buildDynamoArrayUpdateExpression(true, 'add', items);
+  }
+
+  buildDynamoRemoveItemsFromSetExpression(items): any {
+    return this.buildDynamoArrayUpdateExpression(true, 'delete', items);
+  }
+
+  buildDynamoArrayUpdateExpression(isTypeSet: boolean, initialUpdateExpression: string, items: any): any {
+    let updateExpression = "";
+    const attributeValues = {};
+    let count = 0;
+
+    for (const [key, value] of Object.entries(items)) {
+      if (updateExpression === "") {
+        updateExpression = initialUpdateExpression;
+      } else {
+        updateExpression = updateExpression + ',';
+      }
+
+      updateExpression = isTypeSet ? `${updateExpression} ${key} :${key}${count}` :
+        `${updateExpression} ${key} = list_append(if_not_exists(${key}, :emptyList), :${key}${count})`;
+      attributeValues[`:${key}${count++}`] = isTypeSet ? this.databaseClient.createSet(value) : value;
+    }
+
+    updateExpression = `${updateExpression}${isTypeSet ? ' set' : ','} updatedAt = :updatedAt`;
+    attributeValues[':updatedAt'] = new Date().getTime();
+    if (!isTypeSet) attributeValues[':emptyList'] = [];
 
     return {
       UpdateExpression: updateExpression,
