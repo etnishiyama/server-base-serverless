@@ -2,5 +2,6 @@ ENV: dev
 MESSAGE: 'Development environment'
 TABLE_USER: ${self:custom.dynamo-user}
 SQS_QUEUE_URL: ${self:custom.sqs
+REGION: ${self:custom.region}
 DYNAMODB_SCAN_DEFAULT_SIZE: 10000
 PAGINATION_DEFAULT_SIZE: 20
