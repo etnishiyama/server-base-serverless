@@ -1,13 +1,12 @@
-import {UserRepository} from "../../../app/contracts/user_repository";
+import {DynamoRepositoryInterface} from "../../../app/contracts/dynamo_repository";
 import {dynamoDocumentBuilder} from "./dynamo_document_builder";
-import {User} from "../../../entities/model/user_model";
 
 const tableUser = process.env.TABLE_USER;
 
 /**
- * Implementation of the DynamoDB user repository.
+ * Implementation of the DynamoDB repository.
  */
-export class DynamoUserRepository implements UserRepository {
+export class DynamoRepository implements DynamoRepositoryInterface {
 
   databaseClient: any = null;
 
@@ -15,8 +14,8 @@ export class DynamoUserRepository implements UserRepository {
     this.databaseClient = databaseClient;
   }
 
-  add(user: User) {
-    const doc = dynamoDocumentBuilder(user);
+  add(item: any) {
+    const doc = dynamoDocumentBuilder(item);
     const params = {
       TableName: tableUser,
       Item: doc
@@ -75,7 +74,7 @@ export class DynamoUserRepository implements UserRepository {
     return this.databaseClient.delete(params).promise();
   }
 
-  inactivateUser(key: string) {
+  inactivateItem(key: string) {
     const currentDate = new Date().toISOString();
     const newUser = {
       deletedAt: currentDate

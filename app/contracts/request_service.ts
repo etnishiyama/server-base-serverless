@@ -3,7 +3,7 @@ import {BaseHttpError} from "../../frameworks/error/base_http_error";
 /**
  * RESTful api request contract.
  */
-export interface RequestService {
+export interface RequestServiceInterface {
 
   /**
    * Validate the request body.

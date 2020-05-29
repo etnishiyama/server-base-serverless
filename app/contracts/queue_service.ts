@@ -1,9 +1,9 @@
-import {SqsClient} from "./sqs_client";
+import {SqsClientInterface} from "./sqs_client";
 
 /**
  * Queue service contract.
  */
-export interface QueueService {
+export interface QueueServiceInterface {
 
-  client: SqsClient;
+  client: SqsClientInterface;
 }

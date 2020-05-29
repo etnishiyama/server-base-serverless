@@ -1,13 +1,13 @@
 import {InvalidParamsException} from "../../error/http_client_error";
 import {Promise} from 'bluebird';
-import {SqsClient} from "../../../app/contracts/sqs_client";
+import {SqsClientInterface} from "../../../app/contracts/sqs_client";
 
 const queueUrl = process.env.SQS_QUEUE_URL;
 
 /**
  * Implementation of the AWS SQS Queue client.
  */
-export class SqsAwsClient implements SqsClient {
+export class SqsAwsClient implements SqsClientInterface {
 
   sqsClient: any = null;
 

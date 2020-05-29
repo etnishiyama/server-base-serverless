@@ -1,4 +1,4 @@
-import {RequestService} from "../../../app/contracts/request_service";
+import {RequestServiceInterface} from "../../../app/contracts/request_service";
 import {BaseHttpError} from "../../error/base_http_error";
 import {localeService} from "../../../config/project_dependencies";
 import {InvalidJsonException, NullBodyException} from "../../error/http_client_error";
@@ -9,7 +9,7 @@ const headers = {"Access-Control-Allow-Origin": "*"};
 /**
  * Implementation of the request service for HTTP protocol.
  */
-export class HttpRequestService implements RequestService {
+export class HttpRequestService implements RequestServiceInterface {
 
   validateBody(body: any): Promise<any> {
     return new Promise((resolve) => {

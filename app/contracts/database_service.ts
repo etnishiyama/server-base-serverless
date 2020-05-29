@@ -1,8 +1,8 @@
-import {UserRepository} from "./user_repository";
+import {DynamoRepositoryInterface} from "./dynamo_repository";
 
 /**
  * Database service contract.
  */
-export interface DatabaseService {
-  userRepository: UserRepository;
+export interface DatabaseServiceInterface {
+  repository: DynamoRepositoryInterface;
 }

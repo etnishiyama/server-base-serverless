@@ -1,4 +1,4 @@
-import {LocaleService} from "../../app/contracts/locale_service";
+import {LocaleServiceInterface} from "../../app/contracts/locale_service";
 import i18n from 'i18n';
 import config from '../../config/locales/locale-service.json'
 
@@ -7,7 +7,7 @@ i18n.configure(config);
 /**
  * Implementation of i18n as the locale service.
  */
-export class I18nLocaleService implements LocaleService {
+export class I18nLocaleService implements LocaleServiceInterface {
 
   translate(key: string) {
     return i18n.__(key);

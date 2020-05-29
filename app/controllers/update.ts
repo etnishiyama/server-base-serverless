@@ -3,7 +3,7 @@ import {BaseHttpError} from "../../frameworks/error/base_http_error";
 import {InternalServerException} from "../../frameworks/error/http_server_error";
 import {useCaseUpdateUser} from "../../use_cases/update_user";
 
-const updateRepositoryUser = useCaseUpdateUser(databaseService.userRepository);
+const updateRepositoryUser = useCaseUpdateUser(databaseService.repository);
 
 export const updateUser = async (event, _context): Promise<any> => {
   localeService.setLocale(event.headers['Accept-Language']);

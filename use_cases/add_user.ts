@@ -1,15 +1,15 @@
 import {makeUser} from "../entities/model/user";
-import {UserRepository} from "../app/contracts/user_repository";
+import {DynamoRepositoryInterface} from "../app/contracts/dynamo_repository";
 import {Promise} from 'bluebird';
 import * as uuid from 'uuid';
-import {SqsClient} from "../app/contracts/sqs_client";
+import {SqsClientInterface} from "../app/contracts/sqs_client";
 
 /**
  * Use case to add a user to the repository.
  * @param repository repository that the user needs to be saved.
  * @param sqsClient queue that the id of the user will be sent.
  */
-export const useCaseAddUser = (repository: UserRepository, sqsClient: SqsClient) => (body): Promise<any> => {
+export const useCaseAddUser = (repository: DynamoRepositoryInterface, sqsClient: SqsClientInterface) => (body): Promise<any> => {
   return makeUser(body)
     .then(user => {
       user.id = uuid.v1();

@@ -3,7 +3,7 @@ import {databaseService, localeService, queueService, requestService} from '../.
 import {useCaseAddUser} from "../../use_cases/add_user";
 import {InternalServerException} from "../../frameworks/error/http_server_error";
 
-const addUser = useCaseAddUser(databaseService.userRepository, queueService.client);
+const addUser = useCaseAddUser(databaseService.DynamoRepository, queueService.client);
 
 export const postUser = async (event, _context): Promise<any> => {
   localeService.setLocale(event.headers['Accept-Language']);
