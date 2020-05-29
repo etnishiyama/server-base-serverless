@@ -8,7 +8,7 @@ export const dynamoDocumentBuilder = (model: any) => {
   const currentDate = new Date().toISOString();
   const dynamoDocument = model;
 
-  dynamoDocument.id = model.id || uuid.v1();
+  dynamoDocument.id = model.id || uuid.v4();
   dynamoDocument.isActive = model.isActive || true;
   dynamoDocument.createdAt = currentDate;
   dynamoDocument.updatedAt = currentDate;

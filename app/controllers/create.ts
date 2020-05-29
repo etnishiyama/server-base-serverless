@@ -10,7 +10,7 @@ export const postUser = async (event, _context): Promise<any> => {
 
   return requestService.validateBody(event.body)
     .then(body => addUser(body))
-    .then(() => requestService.success({}, 201))
+    .then(promises => requestService.success({id: promises[0]}, 201))
     .catch(error => {
       if (error instanceof BaseHttpError) return requestService.error(error);
       return requestService.error(new InternalServerException(error));

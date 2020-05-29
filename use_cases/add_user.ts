@@ -9,11 +9,13 @@ import {SqsClientInterface} from "../app/contracts/sqs_client";
  * @param repository repository that the user needs to be saved.
  * @param sqsClient queue that the id of the user will be sent.
  */
-export const useCaseAddUser = (repository: DynamoRepositoryInterface, sqsClient: SqsClientInterface) => (body): Promise<any> => {
+export const useCaseAddUser = (repository: DynamoRepositoryInterface,
+  sqsClient: SqsClientInterface) => (body): Promise<any> => {
   return makeUser(body)
     .then(user => {
-      user.id = uuid.v1();
+      user.id = uuid.v4();
       return Promise.all([
+        Promise.resolve(user.id),
         repository.add(user),
         sqsClient.send({id: user.id})
       ])
