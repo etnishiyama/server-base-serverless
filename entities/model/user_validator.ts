@@ -8,6 +8,6 @@ import {User} from "./user_model";
  */
 export const userValidator = (schema) => (user: User): boolean => {
   const result = joi.validate(user, schema, {abortEarly: false});
-  if (result.error) throw new InvalidParamsException(result.error.details);
+  if (result.error) throw new InvalidParamsException(result.error);
   return true;
 };
