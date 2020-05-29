@@ -9,6 +9,7 @@ export const dynamoDocumentBuilder = (model: any) => {
   const dynamoDocument = model;
 
   dynamoDocument.id = model.id || uuid.v1();
+  dynamoDocument.isActive = model.isActive || true;
   dynamoDocument.createdAt = currentDate;
   dynamoDocument.updatedAt = currentDate;
 

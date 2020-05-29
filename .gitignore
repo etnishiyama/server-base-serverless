@@ -3,6 +3,7 @@ package-lock.json
 .webpack
 *.db
 config/secret/*
+patches
 
 # Created by https://www.gitignore.io/api/node,jetbrains,serverless
 # Edit at https://www.gitignore.io/?templates=node,jetbrains,serverless
