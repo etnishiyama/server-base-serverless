@@ -5,12 +5,12 @@ import * as uuid from 'uuid';
  * @param model model to be saved on DB.
  */
 export const dynamoDocumentBuilder = (model: any) => {
-  const currentTimestamp = new Date().getTime();
+  const currentDate = new Date().toISOString();
   const dynamoDocument = model;
 
   dynamoDocument.id = model.id || uuid.v1();
-  dynamoDocument.createdAt = currentTimestamp;
-  dynamoDocument.updatedAt = currentTimestamp;
+  dynamoDocument.createdAt = currentDate;
+  dynamoDocument.updatedAt = currentDate;
 
   return dynamoDocument;
 };

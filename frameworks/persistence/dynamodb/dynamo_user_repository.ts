@@ -76,9 +76,9 @@ export class DynamoUserRepository implements UserRepository {
   }
 
   inactivateUser(key: string) {
-    const currentTimestamp = new Date().getTime();
+    const currentDate = new Date().toISOString();
     const newUser = {
-      deletedAt: currentTimestamp
+      deletedAt: currentDate
     };
 
     return this.updateItem(key, newUser);
@@ -126,7 +126,7 @@ export class DynamoUserRepository implements UserRepository {
     }
 
     updateExpression = updateExpression + ', updatedAt = :updatedAt';
-    attributeValues[':updatedAt'] = new Date().getTime();
+    attributeValues[':updatedAt'] = new Date().toISOString();
 
     return {
       UpdateExpression: updateExpression,
@@ -164,7 +164,7 @@ export class DynamoUserRepository implements UserRepository {
     }
 
     updateExpression = `${updateExpression}${isTypeSet ? ' set' : ','} updatedAt = :updatedAt`;
-    attributeValues[':updatedAt'] = new Date().getTime();
+    attributeValues[':updatedAt'] = new Date().toISOString();
     if (!isTypeSet) attributeValues[':emptyList'] = [];
 
     return {
