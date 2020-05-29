@@ -4,5 +4,6 @@
   "HTTP_ERROR_INVALID_JSON": "Invalid body JSON syntax.",
   "HTTP_ERROR_NOT_IMPLEMENTED_METHOD": "Method not implemented.",
   "HTTP_SUCCESS_DEFAULT": "Success.",
-  "HTTP_ERROR_DEFAULT": "Internal server error."
+  "HTTP_ERROR_DEFAULT": "Internal server error.",
+  "HTTP_ERROR_ENTITY_NOT_FOUND": "Entity not found."
 }

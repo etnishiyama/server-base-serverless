@@ -24,6 +24,15 @@ export class InvalidParamsException extends BaseHttpError {
  */
 export class InvalidJsonException extends BaseHttpError {
   constructor() {
-    super(localeService.translate('HTTP_ERROR_INVALID_JSON'), 422, 3);
+    super(localeService.translate('HTTP_ERROR_INVALID_JSON'), 400, 3);
+  }
+}
+
+/**
+ * Exception for entity not found error.
+ */
+export class UnprocessableEntityException extends BaseHttpError {
+  constructor() {
+    super(localeService.translate('HTTP_ERROR_ENTITY_NOT_FOUND'), 422, 4);
   }
 }

@@ -53,10 +53,13 @@ export class DynamoRepository implements DynamoRepositoryInterface {
 
   updateItem(key, item) {
     const updateParams = this.buildDynamoUpdateExpression(item);
+    updateParams.ExpressionAttributeValues[':id'] = key;
+
     const params = {
       TableName: tableUser,
       Key: {id: key},
       ReturnValues: "ALL_NEW",
+      ConditionExpression: "id = :id",
       UpdateExpression: updateParams.UpdateExpression,
       ExpressionAttributeValues: updateParams.ExpressionAttributeValues,
     };
