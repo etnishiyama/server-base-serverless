@@ -88,10 +88,13 @@ export class DynamoRepository implements DynamoRepositoryInterface {
 
   addItemsToArray(id: string, attributes: any): Promise<any> {
     const updateParams = this.buildDynamoAddItemsToSetExpression(attributes);
+    updateParams.ExpressionAttributeValues[':id'] = id;
+
     const params = {
       TableName: tableUser,
       Key: {id: id},
       ReturnValues: "ALL_NEW",
+      ConditionExpression: "id = :id",
       UpdateExpression: updateParams.UpdateExpression,
       ExpressionAttributeValues: updateParams.ExpressionAttributeValues,
     };
@@ -101,10 +104,13 @@ export class DynamoRepository implements DynamoRepositoryInterface {
 
   removeItemsFromArray(id: string, attributes: any): Promise<any> {
     const updateParams = this.buildDynamoRemoveItemsFromSetExpression(attributes);
+    updateParams.ExpressionAttributeValues[':id'] = id;
+
     const params = {
       TableName: tableUser,
       Key: {id: id},
       ReturnValues: "ALL_NEW",
+      ConditionExpression: "id = :id",
       UpdateExpression: updateParams.UpdateExpression,
       ExpressionAttributeValues: updateParams.ExpressionAttributeValues,
     };
