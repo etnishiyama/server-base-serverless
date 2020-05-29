@@ -1,5 +1,5 @@
 import {DynamoRepositoryInterface} from "../app/contracts/dynamo_repository";
-import {UnprocessableEntityException} from "../frameworks/error/http_client_error";
+import {DeletedEntityException, UnprocessableEntityException} from "../frameworks/error/http_client_error";
 import {Promise} from 'bluebird';
 
 /**
@@ -11,6 +11,10 @@ export const useCaseGetOneUser = (repository: DynamoRepositoryInterface) => asyn
     .then(result => {
       if (!result || !Object.prototype.hasOwnProperty.call(result, "Item")) {
         throw new UnprocessableEntityException();
+      }
+
+      if (Object.prototype.hasOwnProperty.call(result.Item, "deletedAt")) {
+        throw new DeletedEntityException();
       }
 
       return Promise.resolve(result);

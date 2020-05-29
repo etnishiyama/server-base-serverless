@@ -10,7 +10,7 @@ export const inactivateUser = async (event, _context): Promise<any> => {
   const {id} = event.pathParameters || {};
 
   return inactiveUser(id)
-    .then(user => requestService.success(user, 201))
+    .then(() => requestService.success({}, 200))
     .catch(error => {
       if (error instanceof BaseHttpError) return requestService.error(error);
       return requestService.error(new InternalServerException(error));

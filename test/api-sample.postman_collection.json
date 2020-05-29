@@ -1,0 +1,324 @@
+{
+	"info": {
+		"_postman_id": "f4261d4d-a60b-474c-8bc7-32dbad2ef9ad",
+		"name": "api-sample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "POST users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f7059942-a6f6-4378-8118-3766ac2331d3",
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"",
+									"// Check response http code",
+									"pm.test(\"Response code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// Check if response has data",
+									"pm.test(\"Response is valid.\", function () {",
+									"  pm.expect(response).to.have.property('data');",
+									"  pm.expect(response).to.have.property('message');",
+									"});",
+									"",
+									"// Check if data has id ",
+									"pm.test(\"Response data has id.\", function () {",
+									"  pm.expect(response.data).to.have.property('id');",
+									"});",
+									"",
+									"// Save user id",
+									"pm.environment.set(\"userId\", response.data.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fullName\": \"João da Silva Silvano\",\n\t\"email\": \"joaodasilvasilvano@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cdd25980-f9af-4b16-b193-cc7e533540d7",
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"",
+									"// Check response http code",
+									"pm.test(\"Response code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Check if response has data",
+									"pm.test(\"Response is valid\", () => {",
+									"  pm.expect(response).to.have.property('data');",
+									"  pm.expect(response).to.have.property('message');",
+									"  pm.expect(response).to.have.property('total');",
+									"  pm.expect(response).to.have.property('lastEvaluatedIndex');",
+									"});",
+									"",
+									"// Check if data array has valid objects",
+									"pm.test(\"Response data has valid objects\", () => {",
+									"    pm.expect(response.data).to.be.an(\"array\");",
+									"    response.data.forEach(item => {",
+									"       pm.expect(item).to.have.property('createdAt');",
+									"       pm.expect(item).to.have.property('updatedAt');",
+									"       pm.expect(item).to.have.property('id');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "joao",
+									"disabled": true
+								},
+								{
+									"key": "pageSize",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "lastIndex",
+									"value": "7f96dad1-c8f1-4dd5-9bc1-dd3882c3f90d",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b9b3b3c-edfa-4fcc-95c2-e0471d3bd7fe",
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"",
+									"// Check response http code",
+									"pm.test(\"Response code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Check if response has data",
+									"pm.test(\"Response is valid\", () => {",
+									"  pm.expect(response).to.have.property('data');",
+									"  pm.expect(response).to.have.property('message');",
+									"});",
+									"",
+									"// Check if data array has valid objects",
+									"pm.test(\"Response data has valid objects\", () => {",
+									"    pm.expect(response.data).to.have.property('createdAt');",
+									"    pm.expect(response.data).to.have.property('updatedAt');",
+									"    pm.expect(response.data).to.have.property('id');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "954f9ac3-0c61-405b-bc98-5e3be99b4c35",
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"",
+									"// Check response http code",
+									"pm.test(\"Response code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Check if response has data",
+									"pm.test(\"Response is valid.\", function () {",
+									"  pm.expect(response).to.have.property('data');",
+									"  pm.expect(response).to.have.property('message');",
+									"});",
+									"",
+									"// Check if data has id ",
+									"pm.test(\"Response data has id.\", function () {",
+									"  pm.expect(response.data).to.have.property('id');",
+									"  pm.expect(response.data).to.have.property('createdAt');",
+									"  pm.expect(response.data).to.have.property('updatedAt');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fullName\": \"João da Silva Silvano\",\n\t\"email\": \"joaodasilvasilvano2@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4294c0bc-3436-409c-88c1-1ce2d354e029",
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"",
+									"// Check response http code",
+									"pm.test(\"Response code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Check if response has data",
+									"pm.test(\"Response is valid\", () => {",
+									"  pm.expect(response).to.have.property('data');",
+									"  pm.expect(response).to.have.property('message');",
+									"});",
+									"",
+									"// Check if data array has valid objects",
+									"pm.test(\"Response data has valid objects\", () => {",
+									"    pm.expect(response.data).to.be.an(\"object\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

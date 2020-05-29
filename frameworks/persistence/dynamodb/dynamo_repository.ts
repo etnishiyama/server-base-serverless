@@ -2,7 +2,6 @@ import {DynamoRepositoryInterface} from "../../../app/contracts/dynamo_repositor
 import {dynamoDocumentBuilder} from "./dynamo_document_builder";
 
 const tableUser = process.env.TABLE_USER;
-const forbiddenUpdateVars = ['createdAt', 'updatedAt', 'deletedAt', 'id'];
 
 /**
  * Implementation of the DynamoDB repository.
@@ -28,7 +27,7 @@ export class DynamoRepository implements DynamoRepositoryInterface {
   get(id) {
     const params = {
       TableName: tableUser,
-      Key: {id: id}
+      Key: {id: id},
     };
 
     return this.databaseClient.get(params).promise();
@@ -60,7 +59,7 @@ export class DynamoRepository implements DynamoRepositoryInterface {
       TableName: tableUser,
       Key: {id: key},
       ReturnValues: "ALL_NEW",
-      ConditionExpression: "id = :id",
+      ConditionExpression: "id = :id and attribute_not_exists(deletedAt) ",
       UpdateExpression: updateParams.UpdateExpression,
       ExpressionAttributeValues: updateParams.ExpressionAttributeValues,
     };
@@ -124,8 +123,6 @@ export class DynamoRepository implements DynamoRepositoryInterface {
     const attributeValues = {};
 
     for (const [key, value] of Object.entries(modifiedItem)) {
-      if (forbiddenUpdateVars.includes(key)) break;
-
       if (updateExpression === "") {
         updateExpression = 'set ';
       } else {

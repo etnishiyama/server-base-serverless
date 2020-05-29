@@ -36,3 +36,12 @@ export class UnprocessableEntityException extends BaseHttpError {
     super(localeService.translate('HTTP_ERROR_ENTITY_NOT_FOUND'), 422, 4);
   }
 }
+
+/**
+ * Exception for entity is deleted.
+ */
+export class DeletedEntityException extends BaseHttpError {
+  constructor() {
+    super(localeService.translate('HTTP_ERROR_ENTITY_DELETED'), 422, 5);
+  }
+}
