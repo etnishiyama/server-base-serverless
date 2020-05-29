@@ -1,7 +1,8 @@
 import {DynamoRepositoryInterface} from "../../../app/contracts/dynamo_repository";
 import {dynamoDocumentBuilder} from "./dynamo_document_builder";
 
-const tableUser = process.env.TABLE_USER;
+const table = process.env.TABLE_USER;
+const dynamoForbiddenWords = ['createdAt'];
 
 /**
  * Implementation of the DynamoDB repository.
@@ -17,7 +18,7 @@ export class DynamoRepository implements DynamoRepositoryInterface {
   add(item: any) {
     const doc = dynamoDocumentBuilder(item);
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Item: doc
     };
 
@@ -26,7 +27,7 @@ export class DynamoRepository implements DynamoRepositoryInterface {
 
   get(id) {
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Key: {id: id},
     };
 
@@ -35,7 +36,7 @@ export class DynamoRepository implements DynamoRepositoryInterface {
 
   async scan(pageSize, search, lastIndex) {
     const params: any = {};
-    params.TableName = tableUser;
+    params.TableName = table;
     params.Limit = process.env.DYNAMODB_SCAN_DEFAULT_SIZE;
     pageSize = pageSize || process.env.PAGINATION_DEFAULT_SIZE;
 
@@ -56,7 +57,7 @@ export class DynamoRepository implements DynamoRepositoryInterface {
     updateParams.ExpressionAttributeValues[':id'] = key;
 
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Key: {id: key},
       ReturnValues: "ALL_NEW",
       ConditionExpression: "id = :id and attribute_not_exists(deletedAt) ",
@@ -69,7 +70,7 @@ export class DynamoRepository implements DynamoRepositoryInterface {
 
   removeItem(id) {
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Key: {id: id},
       ReturnValues: "ALL_OLD"
     };
@@ -91,7 +92,7 @@ export class DynamoRepository implements DynamoRepositoryInterface {
     updateParams.ExpressionAttributeValues[':id'] = id;
 
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Key: {id: id},
       ReturnValues: "ALL_NEW",
       ConditionExpression: "id = :id",
@@ -107,7 +108,7 @@ export class DynamoRepository implements DynamoRepositoryInterface {
     updateParams.ExpressionAttributeValues[':id'] = id;
 
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Key: {id: id},
       ReturnValues: "ALL_NEW",
       ConditionExpression: "id = :id",
@@ -123,6 +124,8 @@ export class DynamoRepository implements DynamoRepositoryInterface {
     const attributeValues = {};
 
     for (const [key, value] of Object.entries(modifiedItem)) {
+      if (dynamoForbiddenWords.includes(key)) continue;
+
       if (updateExpression === "") {
         updateExpression = 'set ';
       } else {
@@ -132,6 +135,8 @@ export class DynamoRepository implements DynamoRepositoryInterface {
       updateExpression = updateExpression + key + ' = :' + key;
       attributeValues[':' + key] = value;
     }
+
+    if (Object.keys(attributeValues).length < 1) return;
 
     updateExpression = updateExpression + ', updatedAt = :updatedAt';
     attributeValues[':updatedAt'] = new Date().toISOString();
