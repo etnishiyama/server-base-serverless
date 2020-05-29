@@ -1,13 +1,13 @@
-import {UserRepository} from "../../../app/contracts/user_repository";
+import {DynamoRepositoryInterface} from "../../../app/contracts/dynamo_repository";
 import {dynamoDocumentBuilder} from "./dynamo_document_builder";
-import {User} from "../../../entities/model/user_model";
 
-const tableUser = process.env.TABLE_USER;
+const table = process.env.TABLE_USER;
+const dynamoForbiddenWords = ['createdAt'];
 
 /**
- * Implementation of the DynamoDB user repository.
+ * Implementation of the DynamoDB repository.
  */
-export class DynamoUserRepository implements UserRepository {
+export class DynamoRepository implements DynamoRepositoryInterface {
 
   databaseClient: any = null;
 
@@ -15,10 +15,10 @@ export class DynamoUserRepository implements UserRepository {
     this.databaseClient = databaseClient;
   }
 
-  add(user: User) {
-    const doc = dynamoDocumentBuilder(user);
+  add(item: any) {
+    const doc = dynamoDocumentBuilder(item);
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Item: doc
     };
 
@@ -27,8 +27,8 @@ export class DynamoUserRepository implements UserRepository {
 
   get(id) {
     const params = {
-      TableName: tableUser,
-      Key: {id: id}
+      TableName: table,
+      Key: {id: id},
     };
 
     return this.databaseClient.get(params).promise();
@@ -36,7 +36,7 @@ export class DynamoUserRepository implements UserRepository {
 
   async scan(pageSize, search, lastIndex) {
     const params: any = {};
-    params.TableName = tableUser;
+    params.TableName = table;
     params.Limit = process.env.DYNAMODB_SCAN_DEFAULT_SIZE;
     pageSize = pageSize || process.env.PAGINATION_DEFAULT_SIZE;
 
@@ -54,10 +54,13 @@ export class DynamoUserRepository implements UserRepository {
 
   updateItem(key, item) {
     const updateParams = this.buildDynamoUpdateExpression(item);
+    updateParams.ExpressionAttributeValues[':id'] = key;
+
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Key: {id: key},
       ReturnValues: "ALL_NEW",
+      ConditionExpression: "id = :id and attribute_not_exists(deletedAt) ",
       UpdateExpression: updateParams.UpdateExpression,
       ExpressionAttributeValues: updateParams.ExpressionAttributeValues,
     };
@@ -67,7 +70,7 @@ export class DynamoUserRepository implements UserRepository {
 
   removeItem(id) {
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Key: {id: id},
       ReturnValues: "ALL_OLD"
     };
@@ -75,10 +78,10 @@ export class DynamoUserRepository implements UserRepository {
     return this.databaseClient.delete(params).promise();
   }
 
-  inactivateUser(key: string) {
-    const currentTimestamp = new Date().getTime();
+  inactivateItem(key: string) {
+    const currentDate = new Date().toISOString();
     const newUser = {
-      deletedAt: currentTimestamp
+      deletedAt: currentDate
     };
 
     return this.updateItem(key, newUser);
@@ -86,10 +89,13 @@ export class DynamoUserRepository implements UserRepository {
 
   addItemsToArray(id: string, attributes: any): Promise<any> {
     const updateParams = this.buildDynamoAddItemsToSetExpression(attributes);
+    updateParams.ExpressionAttributeValues[':id'] = id;
+
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Key: {id: id},
       ReturnValues: "ALL_NEW",
+      ConditionExpression: "id = :id",
       UpdateExpression: updateParams.UpdateExpression,
       ExpressionAttributeValues: updateParams.ExpressionAttributeValues,
     };
@@ -99,10 +105,13 @@ export class DynamoUserRepository implements UserRepository {
 
   removeItemsFromArray(id: string, attributes: any): Promise<any> {
     const updateParams = this.buildDynamoRemoveItemsFromSetExpression(attributes);
+    updateParams.ExpressionAttributeValues[':id'] = id;
+
     const params = {
-      TableName: tableUser,
+      TableName: table,
       Key: {id: id},
       ReturnValues: "ALL_NEW",
+      ConditionExpression: "id = :id",
       UpdateExpression: updateParams.UpdateExpression,
       ExpressionAttributeValues: updateParams.ExpressionAttributeValues,
     };
@@ -115,6 +124,8 @@ export class DynamoUserRepository implements UserRepository {
     const attributeValues = {};
 
     for (const [key, value] of Object.entries(modifiedItem)) {
+      if (dynamoForbiddenWords.includes(key)) continue;
+
       if (updateExpression === "") {
         updateExpression = 'set ';
       } else {
@@ -125,8 +136,10 @@ export class DynamoUserRepository implements UserRepository {
       attributeValues[':' + key] = value;
     }
 
+    if (Object.keys(attributeValues).length < 1) return;
+
     updateExpression = updateExpression + ', updatedAt = :updatedAt';
-    attributeValues[':updatedAt'] = new Date().getTime();
+    attributeValues[':updatedAt'] = new Date().toISOString();
 
     return {
       UpdateExpression: updateExpression,
@@ -164,7 +177,7 @@ export class DynamoUserRepository implements UserRepository {
     }
 
     updateExpression = `${updateExpression}${isTypeSet ? ' set' : ','} updatedAt = :updatedAt`;
-    attributeValues[':updatedAt'] = new Date().getTime();
+    attributeValues[':updatedAt'] = new Date().toISOString();
     if (!isTypeSet) attributeValues[':emptyList'] = [];
 
     return {

@@ -1,7 +1,7 @@
 /**
  * SQS client contract.
  */
-export interface SqsClient {
+export interface SqsClientInterface {
 
   sqsClient: any;
 

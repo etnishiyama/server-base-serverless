@@ -5,8 +5,8 @@ import {localeService} from "../../config/project_dependencies";
  * Exception for requests without body.
  */
 export class NullBodyException extends BaseHttpError {
-  constructor() {
-    super(localeService.translate('HTTP_ERROR_NULL_BODY'), 400, 1);
+  constructor(data: any) {
+    super(localeService.translate('HTTP_ERROR_NULL_BODY'), 400, 1, data);
   }
 }
 
@@ -14,7 +14,7 @@ export class NullBodyException extends BaseHttpError {
  * Exception for requests with invalid parameters.
  */
 export class InvalidParamsException extends BaseHttpError {
-  constructor(data: string) {
+  constructor(data: any) {
     super(localeService.translate('HTTP_ERROR_INVALID_PARAMS'), 400, 2, data);
   }
 }
@@ -23,7 +23,25 @@ export class InvalidParamsException extends BaseHttpError {
  * Exception for requests with invalid JSON body.
  */
 export class InvalidJsonException extends BaseHttpError {
-  constructor() {
-    super(localeService.translate('HTTP_ERROR_INVALID_JSON'), 422, 3);
+  constructor(data: any) {
+    super(localeService.translate('HTTP_ERROR_INVALID_JSON'), 400, 3, data);
+  }
+}
+
+/**
+ * Exception for entity not found error.
+ */
+export class UnprocessableEntityException extends BaseHttpError {
+  constructor(data: any) {
+    super(localeService.translate('HTTP_ERROR_ENTITY_NOT_FOUND'), 422, 4, data);
+  }
+}
+
+/**
+ * Exception for entity is deleted.
+ */
+export class DeletedEntityException extends BaseHttpError {
+  constructor(data: any) {
+    super(localeService.translate('HTTP_ERROR_ENTITY_DELETED'), 422, 5, data);
   }
 }

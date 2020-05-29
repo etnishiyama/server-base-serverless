@@ -4,5 +4,7 @@
   "HTTP_ERROR_INVALID_JSON": "Corpo da requisição inválido.",
   "HTTP_ERROR_NOT_IMPLEMENTED_METHOD": "Método não implementado.",
   "HTTP_SUCCESS_DEFAULT": "Sucesso.",
-  "HTTP_ERROR_DEFAULT": "Erro interno do servidor."
+  "HTTP_ERROR_DEFAULT": "Erro interno do servidor.",
+  "HTTP_ERROR_ENTITY_NOT_FOUND": "Entidade não encontrada.",
+  "HTTP_ERROR_ENTITY_DELETED": "Entidade removida."
 }

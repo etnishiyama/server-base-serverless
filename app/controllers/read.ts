@@ -4,8 +4,8 @@ import {BaseHttpError} from "../../frameworks/error/base_http_error";
 import {InternalServerException} from "../../frameworks/error/http_server_error";
 import {useCaseGetOneUser} from "../../use_cases/get_one_user";
 
-const getAllUsers = useCaseGetAllUsers(databaseService.userRepository);
-const getOneUser = useCaseGetOneUser(databaseService.userRepository);
+const getAllUsers = useCaseGetAllUsers(databaseService.repository);
+const getOneUser = useCaseGetOneUser(databaseService.repository);
 
 export const getUsers = async (event, _context): Promise<any> => {
   localeService.setLocale(event.headers['Accept-Language']);

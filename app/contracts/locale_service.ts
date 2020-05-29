@@ -1,7 +1,7 @@
 /**
  * Internationalization service contract.
  */
-export interface LocaleService {
+export interface LocaleServiceInterface {
 
   /**
    * Translate one phrase referenced by a key.
