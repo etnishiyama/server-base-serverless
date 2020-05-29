@@ -3,7 +3,7 @@ import {databaseService, localeService, queueService, requestService} from '../.
 import {useCaseAddUser} from "../../use_cases/add_user";
 import {InternalServerException} from "../../frameworks/error/http_server_error";
 
-const addUser = useCaseAddUser(databaseService.DynamoRepository, queueService.client);
+const addUser = useCaseAddUser(databaseService.repository, queueService.client);
 
 export const postUser = async (event, _context): Promise<any> => {
   localeService.setLocale(event.headers['Accept-Language']);
@@ -13,6 +13,6 @@ export const postUser = async (event, _context): Promise<any> => {
     .then(() => requestService.success({}, 201))
     .catch(error => {
       if (error instanceof BaseHttpError) return requestService.error(error);
-      return requestService.error(new InternalServerException());
+      return requestService.error(new InternalServerException(error));
     });
 };
